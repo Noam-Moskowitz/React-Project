@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
-import { Button, Icon, IconButton, InputAdornment } from '@mui/material';
+import { Button, FormControl, Icon, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -55,9 +55,6 @@ const Login = () => {
                         helperText={formErrors && formErrors[`password`]}
                         onChange={(e)=> setPassword(e.target.value)}
                     />
-                    <IconButton className={formErrors && formErrors[`password`]?`pb-3`: ``} onClick={()=> setShowPassword(!showPassword)}>
-                            {showPassword ? <VisibilityOffIcon/> :<VisibilityIcon/>}
-                    </IconButton>
                 </div>
 
                     <Button onClick={handleSubmit}  variant='contained'>Submit</Button>
