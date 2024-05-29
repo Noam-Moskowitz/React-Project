@@ -4,10 +4,17 @@ import PasswordInput from './PasswordInput'
 
 const Register = () => {
     const [name, setName] = useState({});
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState({});
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
 
     return (
         <div className='w-screen flex justify-center'>
-            <form className='border-2 rounded bg-slate-100 p-10'>
+            <form onSubmit={handleSubmit} className='border-2 rounded bg-slate-100 p-10'>
                 <div className='flex my-6 gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
