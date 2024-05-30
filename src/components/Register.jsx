@@ -1,10 +1,10 @@
 import { Button, TextField } from '@mui/material'
 import Checkbox from '@mui/joy/Checkbox';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
 
 const Register = () => {
-    const [name, setName] = useState({});
+    const [name, setName] = useState({ first: null, last: null });
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -12,18 +12,35 @@ const Register = () => {
     const [address, setAddress] = useState({});
     const [isBuisness, setIsBusiness] = useState();
 
+    const [formErrors, setFormErrors] = useState();
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        let validationErrors = {}
+
+        for (const key in name) {
+
+            if (name.hasOwnProperty(key)) {
+                let value = name[key];
+                if (!value || value.length < 2 || value.length > 256) {
+                    validationErrors[key] = `${key} name must be 2-256 characters`
+                }
+            }
+        }
+        setFormErrors(validationErrors)
     }
 
     return (
         <div className='w-screen flex justify-center'>
-            <form onSubmit={handleSubmit} className='border-2 rounded bg-slate-100 p-10'>
+            <form className='border-2 rounded bg-slate-100 p-10'>
+                <h1 className='text-4xl text-center font-bold pb-6 uppercase'>Register</h1>
                 <div className='flex my-6 gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
                         label='First Name'
+                        error={formErrors && formErrors.first ? true : false}
+                        helperText={formErrors && formErrors.first}
                         onChange={(e) => setName({ ...name, first: e.target.value })}
                         required
                     />
@@ -31,6 +48,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='Last Name'
+                        error={formErrors && formErrors.last ? true : false}
+                        helperText={formErrors && formErrors.last}
                         onChange={(e) => setName({ ...name, last: e.target.value })}
                         required
                     />
@@ -116,7 +135,7 @@ const Register = () => {
                     <Checkbox label="Business Account" color="primary" onChange={(e) => setIsBusiness(e.target.checked)} />
                 </div>
                 <div>
-                    <Button style={{ width: '100%' }} /* onClick={handleSubmit} */ variant='contained'>Submit</Button>
+                    <Button style={{ width: '100%' }} onClick={handleSubmit} variant='contained'>Submit</Button>
                 </div>
             </form>
         </div>
