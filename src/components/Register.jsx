@@ -2,6 +2,7 @@ import { Button, TextField } from '@mui/material'
 import Checkbox from '@mui/joy/Checkbox';
 import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
+import { testEmail, testPassword } from '../utils/utls';
 
 const Register = () => {
     const [name, setName] = useState({ first: null, last: null });
@@ -9,7 +10,13 @@ const Register = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
-    const [address, setAddress] = useState({});
+    const [address, setAddress] = useState({
+        country: null,
+        city: null,
+        street: null,
+        houseNumber: null,
+        zip: null,
+    });
     const [isBuisness, setIsBusiness] = useState();
 
     const [formErrors, setFormErrors] = useState();
@@ -27,14 +34,41 @@ const Register = () => {
                 }
             }
         }
+
+        if (!phone || phone.length < 9 || phone.length > 11) {
+            validationErrors[`phone`] = `Phone number  must be 9-11 characters`
+        }
+
+        if (!testEmail(email)) {
+            validationErrors[`email`] = `Please enter a valid email`
+        }
+
+        if (!testPassword(password)) {
+            validationErrors[`password`] = `Please enter a valid password`
+        }
+
+        if (password !== confirmPassword) {
+            validationErrors[`confirmPassword`] = `Value doesnt match password`
+        }
+
+        for (const key in address) {
+            if (key == `state`) break
+            if (address.hasOwnProperty(key)) {
+                let value = address[key];
+                if (!value || value.length < 2 || value.length > 256) {
+                    validationErrors[key] = `${key} must be 2-256 characters`
+                }
+            }
+        }
+        console.log(validationErrors);
         setFormErrors(validationErrors)
     }
 
     return (
         <div className='w-screen flex justify-center'>
-            <form className='border-2 rounded bg-slate-100 p-10'>
+            <form className='border-2 rounded bg-slate-100 p-10 flex-col'>
                 <h1 className='text-4xl text-center font-bold pb-6 uppercase'>Register</h1>
-                <div className='flex my-6 gap-6'>
+                <div className='flex my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
@@ -54,11 +88,13 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div className='flex my-6 gap-6'>
+                <div className='flex my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="tel"
                         label='Phone Number'
+                        error={formErrors && formErrors.phone ? true : false}
+                        helperText={formErrors && formErrors.phone}
                         onChange={(e) => setPhone(e.target.value)}
                         required
                     />
@@ -66,6 +102,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="email"
                         label='Email'
+                        error={formErrors && formErrors.email ? true : false}
+                        helperText={formErrors && formErrors.email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
@@ -74,12 +112,16 @@ const Register = () => {
                     <div className='flex'>
                         <PasswordInput
                             label='Password'
+                            error={formErrors && formErrors.password ? true : false}
+                            helperText={formErrors && formErrors.password}
                             setter={setPassword}
                         />
                     </div>
                     <div className='flex'>
                         <PasswordInput
                             label='Confirm Password'
+                            error={formErrors && formErrors.confirmPassword ? true : false}
+                            helperText={formErrors && formErrors.confirmPassword}
                             setter={setconfirmPassword}
                         />
                     </div>
@@ -89,6 +131,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='Street'
+                        error={formErrors && formErrors.street ? true : false}
+                        helperText={formErrors && formErrors.street}
                         onChange={(e) => setAddress({ ...address, street: e.target.value })}
                         required
                     />
@@ -96,6 +140,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="number"
                         label='House Number'
+                        error={formErrors && formErrors.houseNumber ? true : false}
+                        helperText={formErrors && formErrors.houseNumber}
                         onChange={(e) => setAddress({ ...address, houseNumber: e.target.value })}
                         required
                     />
@@ -105,6 +151,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='City'
+                        error={formErrors && formErrors.city ? true : false}
+                        helperText={formErrors && formErrors.city}
                         onChange={(e) => setAddress({ ...address, city: e.target.value })}
                         required
                     />
@@ -120,6 +168,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='country'
+                        error={formErrors && formErrors.country ? true : false}
+                        helperText={formErrors && formErrors.country}
                         onChange={(e) => setAddress({ ...address, country: e.target.value })}
                         required
                     />
@@ -127,6 +177,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="number"
                         label='Zip'
+                        error={formErrors && formErrors.zip ? true : false}
+                        helperText={formErrors && formErrors.zip}
                         onChange={(e) => setAddress({ ...address, zip: e.target.value })}
                         required
                     />
