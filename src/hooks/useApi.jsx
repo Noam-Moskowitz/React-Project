@@ -20,14 +20,15 @@ const useApi = () => {
 
             // eslint-disable-next-line default-case
             switch (method) {
-                case METHOD.LOGIN | METHOD.REGISTER:
-
+                case METHOD.LOGIN:
+                case METHOD.REGISTER:
+                    console.log(payload);
                     const response = await axios.post(URL, payload)
                     let responseData = response.data
 
-                    break;
-
                     setData(responseData)
+
+                    break;
             }
 
         } catch (error) {

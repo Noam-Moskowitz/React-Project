@@ -11,7 +11,7 @@ function App() {
       <Provider store={store}>
         
         <TopNav/>
-        {/* <Login/> */}
+        <Login/>
         <Register/>
       
       </Provider>

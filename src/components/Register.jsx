@@ -3,6 +3,8 @@ import Checkbox from '@mui/joy/Checkbox';
 import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
 import { testEmail, testPassword } from '../utils/utls';
+import useApi from '../hooks/useApi';
+import { RequestObject } from '../models/RequestObject';
 
 const Register = () => {
     const [name, setName] = useState({ first: null, last: null });
@@ -17,9 +19,11 @@ const Register = () => {
         houseNumber: null,
         zip: null,
     });
-    const [isBuisness, setIsBusiness] = useState();
+    const [isBuisness, setIsBusiness] = useState(false);
 
     const [formErrors, setFormErrors] = useState();
+
+    const { data, callApi, isLoading, apiErrors, METHOD }= useApi();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -60,9 +64,38 @@ const Register = () => {
                 }
             }
         }
-        console.log(validationErrors);
+
         setFormErrors(validationErrors)
+
+
+        if (Object.keys(validationErrors).length===0) {
+
+            const formData={
+            name:name,
+            phone:phone,
+            email:email,
+            password:password,
+            image:{},
+            address:address,
+            isBusiness:isBuisness
+        }
+
+        const newRequest = new RequestObject(
+            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
+            METHOD.REGISTER,
+            formData
+        )
+
+        console.log(`yes?`);
+
+        callApi(newRequest)
+        }
+
+        
     }
+
+    if (isLoading) return <div>Loading..</div>
+    if (apiErrors) return <div>{apiErrors.error}</div>
 
     return (
         <div className='w-screen flex justify-center'>
