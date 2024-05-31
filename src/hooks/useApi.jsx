@@ -33,6 +33,7 @@ const useApi = () => {
 
         } catch (error) {
 
+            console.log(error);
             setApiErrors(error)
 
         } finally {

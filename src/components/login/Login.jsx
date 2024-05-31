@@ -3,10 +3,11 @@ import TextField from '@mui/material/TextField';
 import { Button, FormControl, Icon, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { testEmail, testPassword } from '../utils/utls';
-import useApi from '../hooks/useApi';
-import { RequestObject } from '../models/RequestObject'; 
+import { testEmail, testPassword } from '../../utils/utls';
+import useApi from '../../hooks/useApi';
+import { RequestObject } from '../../models/RequestObject'; 
 import PasswordInput from './PasswordInput';
+import CustomLoader from '../CustomLoader';
 
 
 
@@ -58,6 +59,8 @@ const Login = () => {
     useEffect(()=>{
         console.log(data);
     },[data])
+
+    if (isLoading) return <CustomLoader/>
 
     return (
         <div className='flex justify-center items-center h-[60vh] w-screen'>

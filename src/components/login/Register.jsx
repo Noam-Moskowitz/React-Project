@@ -1,10 +1,11 @@
-import { Button, TextField } from '@mui/material'
+import { Alert, Button, TextField } from '@mui/material'
 import Checkbox from '@mui/joy/Checkbox';
 import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
-import { testEmail, testPassword } from '../utils/utls';
-import useApi from '../hooks/useApi';
-import { RequestObject } from '../models/RequestObject';
+import { testEmail, testPassword } from '../../utils/utls';
+import useApi from '../../hooks/useApi';
+import { RequestObject } from '../../models/RequestObject';
+import CustomLoader from '../CustomLoader';
 
 const Register = () => {
     const [name, setName] = useState({ first: null, last: null });
@@ -94,8 +95,8 @@ const Register = () => {
         
     }
 
-    if (isLoading) return <div>Loading..</div>
-    if (apiErrors) return <div>{apiErrors.error}</div>
+    if (isLoading) return <CustomLoader/>
+    if (apiErrors) return <Alert severity='error' onClose={()=> console.log(`close`)}>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
 
     return (
         <div className='w-screen flex justify-center'>

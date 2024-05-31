@@ -1,9 +1,10 @@
 import { Provider } from 'react-redux';
 import './App.css';
-import Login from './components/Login';
 import TopNav from './components/TopNav';
 import store from './store/store';
-import Register from './components/Register';
+import Login from './components/login/Login';
+import Register from './components/login/Register';
+import CustomLoader from './components/CustomLoader';
 
 function App() {
   return (
