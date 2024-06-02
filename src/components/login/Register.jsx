@@ -5,7 +5,7 @@ import PasswordInput from './PasswordInput'
 import { testEmail, testPassword } from '../../utils/utls';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
-import CustomLoader from '../CustomLoader';
+import CustomLoader from '../loaders/CustomLoader';
 
 const Register = () => {
     const [name, setName] = useState({ first: null, last: null });
@@ -24,7 +24,7 @@ const Register = () => {
 
     const [formErrors, setFormErrors] = useState();
 
-    const { data, callApi, isLoading, apiErrors, METHOD }= useApi();
+    const { data, callApi, isLoading, apiErrors, METHOD } = useApi();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -69,34 +69,38 @@ const Register = () => {
         setFormErrors(validationErrors)
 
 
-        if (Object.keys(validationErrors).length===0) {
+        if (Object.keys(validationErrors).length === 0) {
 
-            const formData={
-            name:name,
-            phone:phone,
-            email:email,
-            password:password,
-            image:{},
-            address:address,
-            isBusiness:isBuisness
+            const formData = {
+                name: name,
+                phone: phone,
+                email: email,
+                password: password,
+                image: {},
+                address: address,
+                isBusiness: isBuisness
+            }
+
+            const newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
+                METHOD.REGISTER,
+                formData
+            )
+
+
+            callApi(newRequest)
         }
 
-        const newRequest = new RequestObject(
-            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
-            METHOD.REGISTER,
-            formData
-        )
-
-        console.log(`yes?`);
-
-        callApi(newRequest)
-        }
-
-        
     }
 
-    if (isLoading) return <CustomLoader/>
-    if (apiErrors) return <Alert severity='error' onClose={()=> console.log(`close`)}>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+        }
+    }, [data])
+
+    if (isLoading) return <CustomLoader />
+    if (apiErrors) return <Alert severity='error' onClose={() => console.log(`close`)}>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
 
     return (
         <div className='w-screen flex justify-center'>

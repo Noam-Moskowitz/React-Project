@@ -17,23 +17,38 @@ const useApi = () => {
         try {
             setIsLoading(true);
             let responseData;
+            let response;
 
             // eslint-disable-next-line default-case
             switch (method) {
                 case METHOD.LOGIN:
                 case METHOD.REGISTER:
-                    console.log(payload);
-                    const response = await axios.post(URL, payload)
-                    let responseData = response.data
+                    response = await axios.post(URL, payload)
 
-                    setData(responseData)
-
+                    responseData = response.data
                     break;
+                case METHOD.GET_ALL:
+                    response = await axios.get(URL)
+
+                    responseData = response.data
+                    break;
+
+                case METHOD.GET_MY_CARDS:
+                    console.log(headers);
+
+                    response = await axios.get(URL, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    })
+
+                    responseData = response.data
             }
+
+            setData(responseData)
 
         } catch (error) {
 
-            console.log(error);
             setApiErrors(error)
 
         } finally {
@@ -63,7 +78,9 @@ const useApi = () => {
 
     const METHOD = {
         LOGIN: `LOGIN`,
-        REGISTER: `REGISTER`
+        REGISTER: `REGISTER`,
+        GET_ALL: `GET_ALL`,
+        GET_MY_CARDS: `GET_MY_CARDS`
     }
 
     return { data, callApi, isLoading, apiErrors, METHOD }
