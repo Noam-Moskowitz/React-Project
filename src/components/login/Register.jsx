@@ -232,6 +232,8 @@ const Register = () => {
             {errorFlag && <div className='flex items-center fixed top-12'>
                 <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
             </div>}
+
+
         </div>
     )
 }
