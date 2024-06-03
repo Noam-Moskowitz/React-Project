@@ -104,9 +104,9 @@ const Register = () => {
 
     return (
         <div className='w-screen flex justify-center'>
-            <form className='border-2 rounded bg-slate-100 p-10 flex-col'>
+            <form className='border-2 px-20 rounded bg-slate-100 py-10 flex-col'>
                 <h1 className='text-4xl text-center font-bold pb-6 uppercase'>Register</h1>
-                <div className='flex my-6 justify-center gap-6'>
+                <div className='flex flex-col md:flex-row my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
@@ -126,7 +126,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div className='flex my-6 justify-center gap-6'>
+                <div className='flex flex-col md:flex-row  my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="tel"
@@ -146,7 +146,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div className='flex gap-6 my-6'>
+                <div className='flex flex-col md:flex-row  gap-6 my-6'>
                     <div className='flex'>
                         <PasswordInput
                             label='Password'
@@ -164,7 +164,7 @@ const Register = () => {
                         />
                     </div>
                 </div>
-                <div className='my-6 flex gap-6'>
+                <div className='my-6 flex flex-col md:flex-row  gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
@@ -184,7 +184,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div className='my-6 flex gap-6'>
+                <div className='my-6 flex flex-col md:flex-row  gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
@@ -201,7 +201,7 @@ const Register = () => {
                         label='State'
                     />
                 </div>
-                <div className='my-6 flex gap-6'>
+                <div className='my-6 flex flex-col md:flex-row  gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
@@ -232,8 +232,6 @@ const Register = () => {
             {errorFlag && <div className='flex items-center fixed top-12'>
                 <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
             </div>}
-
-
         </div>
     )
 }
