@@ -39,7 +39,7 @@ const MyCards = () => {
     if (isLoading) return <SkeletonLoader />
 
     return (
-        <div className='grid grid-cols-3  gap-8 p-10'>
+        <div className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 p-6 md:p-10  gap-8 '>
             {cards && cards.map(card => (<Card content={card} />))}
         </div>
     )
