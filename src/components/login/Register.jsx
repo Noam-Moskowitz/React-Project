@@ -24,7 +24,7 @@ const Register = () => {
 
     const [formErrors, setFormErrors] = useState();
 
-    const { data, callApi, isLoading, apiErrors, METHOD } = useApi();
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -100,7 +100,7 @@ const Register = () => {
     }, [data])
 
     if (isLoading) return <CustomLoader />
-    if (apiErrors) return <Alert severity='error' onClose={() => console.log(`close`)}>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+
 
     return (
         <div className='w-screen flex justify-center'>
@@ -228,6 +228,10 @@ const Register = () => {
                     <Button style={{ width: '100%' }} onClick={handleSubmit} variant='contained'>Submit</Button>
                 </div>
             </form>
+
+            {errorFlag && <div className='flex items-center fixed top-12'>
+                <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+            </div>}
         </div>
     )
 }

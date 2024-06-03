@@ -10,8 +10,8 @@ import { saveInfo } from '../../store/userInfoSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CustomLoader from '../loaders/CustomLoader';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Alert from '@mui/material/Alert';
+
 
 
 
@@ -22,7 +22,7 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [formErrors, setFormErrors] = useState();
 
-    const { data, callApi, isLoading, apiErrors, METHOD } = useApi()
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -71,12 +71,6 @@ const Login = () => {
         }
     }, [data])
 
-    useEffect(() => {
-        if (apiErrors) {
-            console.log(apiErrors.response);
-            toast.error(`${apiErrors.response.status}: ${apiErrors.response.data}`);
-        }
-    }, [apiErrors])
 
     if (isLoading) return <CustomLoader />
 
@@ -108,19 +102,9 @@ const Login = () => {
                 <Button onClick={handleSubmit} variant='contained'>Submit</Button>
             </form>
 
-            <ToastContainer
-                position="top-center"
-                autoClose={4000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover={false}
-                theme="colored"
-                transition='Bounce'
-            />
+            {errorFlag && <div className='flex items-center absolute top-12'>
+                <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+            </div>}
         </div>
     )
 }

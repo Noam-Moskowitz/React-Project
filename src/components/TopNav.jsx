@@ -14,19 +14,22 @@ const TopNav = () => {
 
 
     return (
-        <nav className='w-screen flex bg-blue-300 py-4'>
+        <nav className='w-screen flex bg-blue-300 p-5 shadow-md'>
             <ul className='flex w-screen justify-between '>
-                <div className='flex gap-4'>
-                    <li><Link to='/'>Bcard</Link></li>
-                    <li><Link to='/about'>About</Link></li>
-                    {authKeys && authKeys._id && <li><Link to='/myFavorites'>My Favorites</Link></li>}
-                    {authKeys && authKeys.isBusiness && <li><Link to='/myCards'>My Cards</Link></li>}
-                    {authKeys && authKeys.isAdmin && <li><Link to='/sandbox'>Sandbox</Link></li>}
+                <div className='flex gap-4 items-end'>
+                    <li className='text-white font-bold text-3xl'><Link to='/'>Bcard</Link></li>
+                    <li className='hover:text-white border-r-2 px-2'><Link to='/about'>About</Link></li>
+                    {authKeys && authKeys._id &&
+                        <li className='hover:text-white border-r-2 px-2'><Link to='/myFavorites'>My Favorites</Link></li>}
+                    {authKeys && authKeys.isBusiness &&
+                        <li><Link to='/myCards'>My Cards</Link></li>}
+                    {authKeys && authKeys.isAdmin &&
+                        <li><Link to='/sandbox'>Sandbox</Link></li>}
                 </div>
                 {authKeys && authKeys._id == null &&
-                    <div className='flex gap-4'>
-                        <li><Link to='/login'>Login</Link></li>
-                        <li><Link to='/register'>Register</Link></li>
+                    <div className='flex gap-4 items-end'>
+                        <li className='hover:text-white'><Link to='/login'>Login</Link></li>
+                        <li className='hover:text-white'><Link to='/register'>Register</Link></li>
                     </div>
                 }
             </ul>

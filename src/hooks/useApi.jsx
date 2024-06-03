@@ -11,6 +11,7 @@ const useApi = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [apiErrors, setApiErrors] = useState();
+    const [errorFlag, setErrorFlag] = useState(false)
 
 
     const initRequest = async () => {
@@ -76,6 +77,15 @@ const useApi = () => {
         }
     }, [URL])
 
+    useEffect(() => {
+        if (apiErrors) {
+            setErrorFlag(true);
+            setTimeout(() => {
+                setErrorFlag(false)
+            }, 3000)
+        }
+    }, [apiErrors])
+
     const METHOD = {
         LOGIN: `LOGIN`,
         REGISTER: `REGISTER`,
@@ -83,7 +93,7 @@ const useApi = () => {
         GET_MY_CARDS: `GET_MY_CARDS`
     }
 
-    return { data, callApi, isLoading, apiErrors, METHOD }
+    return { data, callApi, isLoading, apiErrors, errorFlag, METHOD }
 }
 
 export default useApi
