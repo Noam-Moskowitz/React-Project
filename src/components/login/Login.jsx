@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CustomLoader from '../loaders/CustomLoader';
 import Alert from '@mui/material/Alert';
+import useThemeColor from '../../hooks/useThemeColor';
 
 
 
@@ -25,6 +26,10 @@ const Login = () => {
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const { primaryColor, backgroundColor, } = useThemeColor();
+
+
 
 
 
@@ -76,13 +81,20 @@ const Login = () => {
 
 
     return (
-        <div className='flex justify-center items-center h-screen w-screen'>
-            <form className='flex flex-col w-[350px] sm:w-[auto] border-2 rounded py-16 px-10 md:px-24 bg-slate-100'>
-                <h1 className='text-center text-2xl md:text-5xl uppercase font-bold pb-10 md:pb-20'>Log In</h1>
+        <div className='flex justify-center items-center h-screen w-screen' style={{ backgroundColor: backgroundColor }}>
+            <form
+                className='flex flex-col w-[350px] sm:w-[auto] border-2 rounded py-16 px-10 md:px-24'
+                style={{ borderColor: primaryColor }}
+            >
+                <h1
+                    className='text-center text-2xl md:text-5xl uppercase font-bold pb-10 md:pb-20'
+                    style={{ color: primaryColor }}
+                >Log In</h1>
                 <div className='my-2 '>
                     <TextField
                         id="outlined-error-helper-text"
                         error={formErrors && formErrors[`email`] ? true : false}
+                        color='primary'
                         helperText={formErrors && formErrors[`email`]}
                         type="email"
                         label='Email'
@@ -99,7 +111,7 @@ const Login = () => {
                     />
                 </div>
 
-                <Button onClick={handleSubmit} variant='contained'>Submit</Button>
+                <Button onClick={handleSubmit} variant='contained' color='primary'>Submit</Button>
             </form>
 
             {errorFlag && <div className='flex items-center absolute top-12'>

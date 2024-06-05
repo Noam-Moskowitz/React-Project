@@ -6,6 +6,7 @@ import { testEmail, testPassword } from '../../utils/utls';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import CustomLoader from '../loaders/CustomLoader';
+import useThemeColor from '../../hooks/useThemeColor';
 
 const Register = () => {
     const [name, setName] = useState({ first: null, last: null });
@@ -25,6 +26,8 @@ const Register = () => {
     const [formErrors, setFormErrors] = useState();
 
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
+
+    const { primaryColor, backgroundColor } = useThemeColor();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -103,9 +106,18 @@ const Register = () => {
 
 
     return (
-        <div className='w-screen flex justify-center'>
-            <form className='border-2 px-20 rounded bg-slate-100 py-10 flex-col'>
-                <h1 className='text-4xl text-center font-bold pb-6 uppercase'>Register</h1>
+        <div
+            className='w-screen flex justify-center p-4'
+            style={{ backgroundColor: backgroundColor }}
+        >
+            <form
+                className='border-2 px-20 rounded  py-10 flex-col'
+                style={{ backgroundColor: backgroundColor, borderColor: primaryColor }}
+            >
+                <h1
+                    className='text-4xl text-center font-bold pb-6 uppercase'
+                    style={{ color: primaryColor }}
+                >Register</h1>
                 <div className='flex flex-col md:flex-row my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
@@ -222,7 +234,7 @@ const Register = () => {
                     />
                 </div>
                 <div className='my-6'>
-                    <Checkbox label="Business Account" color="primary" onChange={(e) => setIsBusiness(e.target.checked)} />
+                    {/* <Checkbox label="Business Account" color="primary" onChange={(e) => setIsBusiness(e.target.checked)} /> */}
                 </div>
                 <div>
                     <Button style={{ width: '100%' }} onClick={handleSubmit} variant='contained'>Submit</Button>
