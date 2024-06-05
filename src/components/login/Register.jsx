@@ -107,7 +107,7 @@ const Register = () => {
 
     return (
         <div
-            className='w-screen flex justify-center p-4'
+            className='w-screen md:h-screen flex justify-center p-4'
             style={{ backgroundColor: backgroundColor }}
         >
             <form
