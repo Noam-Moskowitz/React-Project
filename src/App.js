@@ -8,14 +8,17 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import Favorites from './components/cards/Favorites';
 import MyCards from './components/cards/MyCards';
 import Home from './components/Home';
+import { ThemeProvider } from '@mui/material';
+import useAppTheme from './hooks/useAppTheme';
 
 
 function App() {
 
+  const currentTheme = useAppTheme();
 
   return (
     <div className="App">
-      <Provider store={store}>
+      <ThemeProvider theme={currentTheme} >
 
         <BrowserRouter>
           <TopNav />
@@ -36,8 +39,7 @@ function App() {
 
 
         </BrowserRouter>
-
-      </Provider>
+      </ThemeProvider>
     </div>
   );
 }

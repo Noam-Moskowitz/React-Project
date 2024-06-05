@@ -1,13 +1,17 @@
 import { Avatar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import { changeTheme } from '../store/themeSlice';
 
 const TopNav = () => {
 
     const userInfo = useSelector((state) => state.userInfo)
+    const theme = useSelector((state) => state.theme)
+
+    const dispatch = useDispatch()
 
     const [authKeys, setAuthKeys] = useState()
     const [darkTheme, setDarkTheme] = useState(false)
@@ -15,6 +19,8 @@ const TopNav = () => {
     useEffect(() => {
         setAuthKeys(userInfo)
     }, [userInfo])
+
+
 
 
     return (
@@ -33,8 +39,8 @@ const TopNav = () => {
                 <div>
                     <button
                         className='border-4 rounded-full px-2 bg-blue-200 border-blue-200 hover:bg-blue-300'
-                        onClick={() => setDarkTheme(!darkTheme)}
-                    >{darkTheme ? <LightModeIcon /> : <DarkModeIcon />}</button>
+                        onClick={() => { dispatch(changeTheme()) }}
+                    >{theme == `dark` ? <LightModeIcon /> : <DarkModeIcon />}</button>
                 </div>
                 {authKeys && authKeys._id == null ?
                     <div className='flex gap-4 items-end'>
@@ -42,7 +48,7 @@ const TopNav = () => {
                         <li className=' hover:border-b-blue-200 border-b-4 border-b-blue-300 p-1 px-2 uppercase'><Link to='/register'>Register</Link></li>
                     </div> :
                     <div>
-                        <Avatar style={{ backgroundColor: ` rgb(191 219 254)` }} >NM</Avatar>
+                        <Avatar style={{ backgroundColor: 'primary' }} >NM</Avatar>
                     </div>
                 }
             </ul>
