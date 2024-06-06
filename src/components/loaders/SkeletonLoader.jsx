@@ -1,9 +1,14 @@
 import React from 'react'
 import SkeletonCard from './SkeletonCard'
+import useThemeColor from '../../hooks/useThemeColor';
 
 const SkeletonLoader = () => {
+    const { backgroundColor } = useThemeColor();
     return (
-        <div className='grid md:grid-cols-2 lg:grid-cols-3  gap-8 p-10 animate-pulse'>
+        <div
+            className='grid md:grid-cols-2 lg:grid-cols-3  gap-8 p-10 animate-pulse'
+            style={{ backgroundColor: backgroundColor }}
+        >
             <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />
