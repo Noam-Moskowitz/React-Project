@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Card = ({ content }) => {
+
+    const [isLiked, setIsLiked] = useState(false)
 
 
     return (
@@ -23,8 +27,17 @@ const Card = ({ content }) => {
                 <p>{`${content.address.street} ${content.address.houseNumber}, ${content.address.city}, ${content.address.zip}`}</p>
                 <p>{` ${content.address.country}`}</p>
             </div>
-            <div>
-                likes:{content.likes.length}
+            <div className='flex items-end justify-center'>
+                <div
+                    className='hover:cursor-pointer active:animate-ping'
+                    onClick={() => setIsLiked(!isLiked)}
+                >
+                    {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
+                </div>
+                <div>
+                    {content.likes.length}
+                </div>
+
             </div>
         </div>
     )
