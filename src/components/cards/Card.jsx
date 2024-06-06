@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
 const Card = ({ content }) => {
 
-    const [isLiked, setIsLiked] = useState(false)
+    const [isLiked, setIsLiked] = useState(false);
+
+
 
 
     return (
@@ -19,9 +23,15 @@ const Card = ({ content }) => {
             <div className='border-b-2 border-gray-400'>
                 {content.description}
             </div>
-            <div className='border-b-2 border-gray-400 flex justify-center gap-8'>
-                <p>{content.email}</p>
-                <p>{content.phone}</p>
+            <div className='border-b-2 border-gray-400 flex flex-col  items-start md:flex-row md:justify-center      md:gap-8'>
+                <div className='flex justify-center  p-1'>
+                    <AlternateEmailIcon color='primary' />
+                    <p className='px-1'>{content.email}</p>
+                </div>
+                <div className='flex justify-center  p-1'>
+                    <PhoneInTalkIcon color='primary' />
+                    <p className='px-1'>{content.phone}</p>
+                </div>
             </div>
             <div className='border-b-2 border-gray-400 '>
                 <p>{`${content.address.street} ${content.address.houseNumber}, ${content.address.city}, ${content.address.zip}`}</p>
