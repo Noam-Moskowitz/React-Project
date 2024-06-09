@@ -83,7 +83,7 @@ const Login = () => {
     return (
         <div className='flex justify-center items-center h-screen w-screen' style={{ backgroundColor: backgroundColor }}>
             <form
-                className='flex flex-col w-[350px] sm:w-[auto] border-2 rounded py-16 px-10 md:px-24'
+                className='flex flex-col w-[350px] sm:w-[auto] border-4 rounded py-16 px-10 md:px-24'
                 style={{ borderColor: primaryColor }}
             >
                 <h1

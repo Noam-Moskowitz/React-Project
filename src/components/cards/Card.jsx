@@ -6,10 +6,11 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import { useSelector } from 'react-redux';
+import Alert  from '@mui/material/Alert';
 
 const Card = ({ content }) => {
 
-    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
+    const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
     const userInfo = useSelector((state) => state.userInfo)
 
     const [isLiked, setIsLiked] = useState(false);
@@ -95,6 +96,20 @@ const Card = ({ content }) => {
                 </div>
 
             </div>
+
+            {errorFlag && <div className='flex items-center absolute top-12'>
+                <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+            </div>}
+
+            {successFlag &&
+                <div className='flex items-center fixed top-12 left-[40vw]'>
+                    { isLiked ?
+                        <Alert className='animate-bounce' severity='success'>Succesfully added card to favorites!</Alert>
+                            :
+                        <Alert className='animate-bounce' severity='success'>Succesfully removed card from favorites!</Alert>
+                    }
+                </div> 
+            }
         </div>
     )
 }

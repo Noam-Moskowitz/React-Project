@@ -11,7 +11,8 @@ const useApi = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [apiErrors, setApiErrors] = useState();
-    const [errorFlag, setErrorFlag] = useState(false)
+    const [errorFlag, setErrorFlag] = useState(false);
+    const [successFlag, setSuccessFlag]= useState(false);
 
 
     const initRequest = async () => {
@@ -103,6 +104,15 @@ const useApi = () => {
         }
     }, [apiErrors])
 
+    useEffect(()=>{
+        if (data) {
+            setSuccessFlag(true);
+            setTimeout(() => {
+                setSuccessFlag(false)
+            }, 1500)
+        }
+    },[data])
+
     const METHOD = {
         LOGIN: `LOGIN`,
         REGISTER: `REGISTER`,
@@ -111,7 +121,7 @@ const useApi = () => {
         LIKE: `LIKE`
     }
 
-    return { data, callApi, isLoading, apiErrors, errorFlag, METHOD }
+    return { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD }
 }
 
 export default useApi

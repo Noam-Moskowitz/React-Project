@@ -111,7 +111,7 @@ const Register = () => {
             style={{ backgroundColor: backgroundColor }}
         >
             <form
-                className='border-2 px-20 rounded  py-10 flex-col'
+                className='border-4 px-20 rounded  py-10 flex-col'
                 style={{ backgroundColor: backgroundColor, borderColor: primaryColor }}
             >
                 <h1
