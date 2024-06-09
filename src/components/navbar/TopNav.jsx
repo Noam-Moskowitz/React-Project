@@ -42,6 +42,8 @@ const TopNav = () => {
             className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold `}
             style={{ backgroundColor: primaryColor }}
         >
+
+            {/* mobile only */}
             <div className='flex md:hidden justify-between w-full'>
                 <div
                     className='border-2 rounded p-1 '
@@ -71,6 +73,8 @@ const TopNav = () => {
                     </div>
                 </div>
             </div>
+
+
             <ul className={`flex flex-col ${display}   md:flex md:flex-row w-full justify-between `}>
                 <div className='flex flex-col md:flex-row gap-4 md:items-end'>
                     <NavItem
@@ -117,45 +121,48 @@ const TopNav = () => {
                         />
                     }
                 </div>
-                <div className='flex items-center gap-2  hidden md:flex'>
-                    <div>
-                        <SearchBar
-                            bgColor={contrastTextColor}
-                        />
+
+                <div className='flex gap-4'>
+                    <div className='flex items-center gap-2  hidden md:flex'>
+                        <div>
+                            <SearchBar
+                                bgColor={contrastTextColor}
+                            />
+                        </div>
+                        <div className='flex items-end'>
+                            <button
+                                className=' border-4 rounded-full px-2 '
+                                style={{ color: textColor, backgroundColor: backgroundColor, borderColor: textColor }}
+                                onClick={() => { dispatch(changeTheme()) }}
+                            >{theme == `dark` ? <LightModeIcon /> : <DarkModeIcon />}</button>
+                        </div>
                     </div>
-                    <div className='flex items-end'>
-                        <button
-                            className=' border-4 rounded-full px-2 '
-                            style={{ color: textColor, backgroundColor: backgroundColor, borderColor: textColor }}
-                            onClick={() => { dispatch(changeTheme()) }}
-                        >{theme == `dark` ? <LightModeIcon /> : <DarkModeIcon />}</button>
-                    </div>
+                    {authKeys && authKeys._id == null ?
+                        <div className='flex flex-row  gap-4 pt-2 p-1 justify-center md:justify-end'>
+                            <NavItem
+                                selectedNav={selectedNav}
+                                setSelectedNav={setSelectedNav}
+                                themeColors={{ contrastTextColor, primaryColor }}
+                                label='LOG IN'
+                                linkTo='/login'
+                            />
+
+                            <NavItem
+                                selectedNav={selectedNav}
+                                setSelectedNav={setSelectedNav}
+                                themeColors={{ contrastTextColor, primaryColor }}
+                                label='REGISTER'
+                                linkTo='/register'
+                            />
+
+                        </div> :
+                        <div className='hidden md:block'>
+                            <Avatar
+                                color='primary'
+                            >NM</Avatar>
+                        </div>
+                    }
                 </div>
-                {authKeys && authKeys._id == null ?
-                    <div className='flex flex-row  gap-4 pt-2 p-1 justify-center md:justify-end'>
-                        <NavItem
-                            selectedNav={selectedNav}
-                            setSelectedNav={setSelectedNav}
-                            themeColors={{ contrastTextColor, primaryColor }}
-                            label='LOG IN'
-                            linkTo='/login'
-                        />
-
-                        <NavItem
-                            selectedNav={selectedNav}
-                            setSelectedNav={setSelectedNav}
-                            themeColors={{ contrastTextColor, primaryColor }}
-                            label='REGISTER'
-                            linkTo='/register'
-                        />
-
-                    </div> :
-                    <div className='hidden md:block'>
-                        <Avatar
-                            color='primary'
-                        >NM</Avatar>
-                    </div>
-                }
             </ul>
         </nav>
     )
