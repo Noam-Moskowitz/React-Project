@@ -5,12 +5,15 @@ import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
+import { useSelector } from 'react-redux';
 
 const Card = ({ content }) => {
 
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
+    const userInfo = useSelector((state) => state.userInfo)
 
     const [isLiked, setIsLiked] = useState(false);
+    const [likeAmount, setLikeAmount] = useState(content.likes.length)
 
 
     const handleLike = () => {
@@ -23,8 +26,7 @@ const Card = ({ content }) => {
             return
         };
 
-        console.log(token);
-        console.log(content._id);
+
 
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/`,
@@ -37,8 +39,19 @@ const Card = ({ content }) => {
     }
 
     useEffect(() => {
-        if (data) {
-            console.log(data);
+        for (let like of content.likes) {
+
+            if (like === userInfo._id) {
+                setIsLiked(true)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isLiked) {
+            setLikeAmount(likeAmount + 1)
+        } else {
+            setLikeAmount(likeAmount - 1)
         }
     }, [data])
 
@@ -78,7 +91,7 @@ const Card = ({ content }) => {
                     {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
                 </div>
                 <div>
-                    {content.likes.length}
+                    {likeAmount}
                 </div>
 
             </div>
