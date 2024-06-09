@@ -44,6 +44,23 @@ const useApi = () => {
                     })
 
                     responseData = response.data
+                    break;
+
+                case METHOD.LIKE:
+                    console.log(headers);
+                    console.log(payload);
+                    console.log(`${URL}/${payload}`, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    });
+                    response = await axios.patch(`${URL}${payload}`, {}, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    })
+
+                    responseData = response.data
             }
 
             setData(responseData)
@@ -90,7 +107,8 @@ const useApi = () => {
         LOGIN: `LOGIN`,
         REGISTER: `REGISTER`,
         GET_ALL: `GET_ALL`,
-        GET_MY_CARDS: `GET_MY_CARDS`
+        GET_MY_CARDS: `GET_MY_CARDS`,
+        LIKE: `LIKE`
     }
 
     return { data, callApi, isLoading, apiErrors, errorFlag, METHOD }

@@ -99,7 +99,7 @@ const TopNav = () => {
                             setSelectedNav={setSelectedNav}
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='My Favorites'
-                            linkTo='/abmyFavoritesout'
+                            linkTo='/myFavorites'
                         />
                     }
                     {authKeys && authKeys.isBusiness &&

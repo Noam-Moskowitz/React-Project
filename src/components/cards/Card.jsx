@@ -3,11 +3,44 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import useApi from '../../hooks/useApi';
+import { RequestObject } from '../../models/RequestObject';
 
 const Card = ({ content }) => {
 
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
+
     const [isLiked, setIsLiked] = useState(false);
 
+
+    const handleLike = () => {
+        setIsLiked(!isLiked)
+
+        const token = localStorage.getItem(`token`);
+
+        if (!token) {
+            console.log(`no token`)
+            return
+        };
+
+        console.log(token);
+        console.log(content._id);
+
+        const newRequest = new RequestObject(
+            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/`,
+            METHOD.LIKE,
+            content._id,
+            token
+        )
+
+        callApi(newRequest)
+    }
+
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+        }
+    }, [data])
 
 
 
@@ -40,7 +73,7 @@ const Card = ({ content }) => {
             <div className='flex items-end justify-center'>
                 <div
                     className='hover:cursor-pointer active:animate-ping'
-                    onClick={() => setIsLiked(!isLiked)}
+                    onClick={handleLike}
                 >
                     {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
                 </div>
