@@ -7,14 +7,20 @@ import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import { useSelector } from 'react-redux';
 import Alert  from '@mui/material/Alert';
+import EditIcon from '@mui/icons-material/Edit';
+import useThemeColor from '../../hooks/useThemeColor';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ content }) => {
 
     const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
     const userInfo = useSelector((state) => state.userInfo)
+    const {primaryColor,backgroundColor, textColor}=useThemeColor()
+    const navigate = useNavigate();
 
     const [isLiked, setIsLiked] = useState(false);
-    const [likeAmount, setLikeAmount] = useState(content.likes.length)
+    const [likeAmount, setLikeAmount] = useState(content.likes.length);
+    const [hovering,setHovering]=useState(false);
 
 
     const handleLike = () => {
@@ -40,6 +46,7 @@ const Card = ({ content }) => {
     }
 
     useEffect(() => {
+        console.log(content);
         for (let like of content.likes) {
 
             if (like === userInfo._id) {
@@ -59,8 +66,26 @@ const Card = ({ content }) => {
 
 
     return (
-        <div className='border-2 rounded-lg bg-slate-200 p-2 flex flex-col justify-between'>
-            <div className='h-[50%]'>
+        <div className='border-2 rounded-lg bg-slate-200 p-2 flex flex-col justify-between h-full w-full'>
+            <div 
+                className='h-[50%]  relative  overflow-hidden'
+                onMouseEnter={()=>setHovering(true)}
+                onMouseLeave={()=>setHovering(false)}
+            >
+                {hovering&&
+                <div 
+                    className='w-full h-full slide-in z-10 rounded  flex items-center justify-center'
+                    style={{backgroundColor:primaryColor}}
+                >
+                    <div 
+                        style={{backgroundColor:backgroundColor , color:textColor}}
+                        className='rounded-full hover:cursor-pointer font-bold text-xl p-4 hover:opacity-75'
+                        onClick={()=>navigate(`/business/${content._id}`)}
+                    >
+                        View Business
+                    </div>
+                </div>
+                }
                 <img className='w-full h-full rounded' src={content.image.url} alt={content.image.alt} />
             </div>
             <div className='border-b-2 border-gray-400 '>
@@ -84,18 +109,26 @@ const Card = ({ content }) => {
                 <p>{`${content.address.street} ${content.address.houseNumber}, ${content.address.city}, ${content.address.zip}`}</p>
                 <p>{` ${content.address.country}`}</p>
             </div>
-            <div className='flex items-end justify-center'>
-                <div
-                    className='hover:cursor-pointer active:animate-ping'
-                    onClick={handleLike}
-                >
-                    {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
+            {userInfo._id &&
+            <div className='flex items-center justify-center gap-8'>
+                { userInfo._id === content.user_id &&
+                    <div className='hover:bg-blue-200 rounded-md p-2 hover:cursor-pointer'>
+                        <EditIcon color='primary' />
+                    </div>
+                } 
+                <div className='flex items-end justify-center'>
+                    <div
+                        className='hover:cursor-pointer active:animate-ping'
+                        onClick={handleLike}
+                    >
+                        {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
+                    </div>
+                    <div>
+                        {likeAmount}
+                    </div>
                 </div>
-                <div>
-                    {likeAmount}
-                </div>
-
             </div>
+            }
 
             {errorFlag && <div className='flex items-center absolute top-12'>
                 <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>

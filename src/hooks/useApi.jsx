@@ -8,6 +8,7 @@ const useApi = () => {
     const [method, setMethod] = useState();
     const [headers, setHeaders] = useState(null);
     const [payload, setPayload] = useState(null);
+    const [requestFlag,setRequestFlag]=useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
     const [apiErrors, setApiErrors] = useState();
@@ -47,6 +48,12 @@ const useApi = () => {
                     responseData = response.data
                     break;
 
+                case METHOD.GET_ONE:
+                    response= await axios.get(URL+payload);
+
+                    responseData=response.data
+                    break;
+
                 case METHOD.LIKE:
                     console.log(headers);
                     console.log(payload);
@@ -73,6 +80,7 @@ const useApi = () => {
         } finally {
 
             setIsLoading(false)
+            setRequestFlag(false);
 
         }
     }
@@ -81,19 +89,20 @@ const useApi = () => {
 
 
     const callApi = (requestObj) => {
-        const { rUrl, rMethod, rHeaders, rPayload /* ,rID */ } = requestObj;
+        const { rUrl, rMethod, rHeaders, rPayload} = requestObj;
 
         setURL(rUrl);
         setMethod(rMethod);
         setHeaders(rHeaders ? rHeaders : null);
         setPayload(rPayload ? rPayload : null);
+        setRequestFlag(true);
     }
 
     useEffect(() => {
-        if (URL) {
+        if (requestFlag) {
             initRequest()
         }
-    }, [URL])
+    }, [requestFlag])
 
     useEffect(() => {
         if (apiErrors) {
@@ -117,6 +126,7 @@ const useApi = () => {
         LOGIN: `LOGIN`,
         REGISTER: `REGISTER`,
         GET_ALL: `GET_ALL`,
+        GET_ONE:`GET_ONE`,
         GET_MY_CARDS: `GET_MY_CARDS`,
         LIKE: `LIKE`
     }

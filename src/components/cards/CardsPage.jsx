@@ -4,11 +4,11 @@ import { RequestObject } from '../../models/RequestObject';
 import Card from './Card';
 import SkeletonLoader from '../loaders/SkeletonLoader';
 import useThemeColor from '../../hooks/useThemeColor';
-import AddIcon from '@mui/icons-material/Add';
 
 const CardsPage = () => {
     const { data, callApi, isLoading, apiErrors, METHOD } = useApi();
-    const { backgroundColor, primaryColor, contrastTextColor } = useThemeColor();
+    const { backgroundColor} = useThemeColor();
+
     const [cards, setCards] = useState()
 
     useEffect(() => {
@@ -30,15 +30,6 @@ const CardsPage = () => {
 
     return (
         <div>
-            <div className='flex px-6 pt-6' style={{ backgroundColor: backgroundColor }}>
-                <div
-                    className='py-2 flex px-4  font-bold  rounded-lg shadow-xl hover:cursor-pointer'
-                    style={{ backgroundColor: primaryColor, color: contrastTextColor }}
-                >
-                    <AddIcon />
-                    <p>Add Card</p>
-                </div>
-            </div>
             <div
                 className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 p-6 md:p-10  gap-8 '
                 style={{ backgroundColor: backgroundColor }}

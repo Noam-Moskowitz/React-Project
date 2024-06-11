@@ -1,0 +1,14 @@
+.slide-in{
+    position: absolute;
+    left: 100%;
+    animation: slideIn 1s forwards;
+}
+
+@keyframes slideIn {
+            0% {
+                left: 100%; /* Start completely outside the visible range */
+            }
+            100% {
+                left: 0; /* End at left 0 */
+            }
+        }
