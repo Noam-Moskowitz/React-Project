@@ -10,6 +10,7 @@ import { ThemeProvider } from '@mui/material';
 import useAppTheme from './hooks/useAppTheme';
 import TopNav from './components/navbar/TopNav';
 import BusinessPage from './components/BusinessPage';
+import EditCard from './components/cards/EditCard';
 
 
 function App() {
@@ -33,7 +34,8 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/myFavorites' element={<Favorites />} />
             <Route path='/myCards' element={<MyCards />} />
-            <Route path='/business/:id' element={<BusinessPage/>} />
+            <Route path='/business/:id' element={<BusinessPage />} />
+            <Route path='/card/edit' element={<EditCard />} />
 
 
           </Routes>
