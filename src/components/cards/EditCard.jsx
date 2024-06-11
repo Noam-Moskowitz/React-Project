@@ -1,14 +1,37 @@
 import { Button, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useThemeColor from '../../hooks/useThemeColor';
+import { useParams } from 'react-router-dom';
+import useApi from '../../hooks/useApi';
+import { RequestObject } from '../../models/RequestObject';
+import CustomLoader from '../loaders/CustomLoader';
 
 const EditCard = () => {
-
+    const { id } = useParams();
     const { primaryColor, backgroundColor } = useThemeColor();
+    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD } = useApi();
 
+    const [content, setContent] = useState()
     const [formErrors, setFromErrors] = useState()
 
+    useEffect(() => {
+        const newRequest = new RequestObject(
+            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/`,
+            METHOD.GET_ONE,
+            id
+        )
 
+        callApi(newRequest);
+    }, [])
+
+    useEffect(() => {
+        if (data) {
+            setContent(data)
+        }
+    }, [data])
+
+
+    if (isLoading) return <CustomLoader />
 
     return (
         <div className='px-80 py-20'>
@@ -23,6 +46,7 @@ const EditCard = () => {
                         label='Title'
                         error={formErrors && formErrors.first ? true : false}
                         helperText={formErrors && formErrors.first}
+                        value={content && content.title}
                         required
                     />
                     <TextField
@@ -31,6 +55,7 @@ const EditCard = () => {
                         label='Subtitle'
                         error={formErrors && formErrors.last ? true : false}
                         helperText={formErrors && formErrors.last}
+                        value={content && content.subtitle}
                         required
                     />
                     <TextField
@@ -41,6 +66,7 @@ const EditCard = () => {
                         rows={4}
                         error={formErrors && formErrors.phone ? true : false}
                         helperText={formErrors && formErrors.phone}
+                        value={content && content.description}
                         required
                     />
                     <div className='flex justify-around'>
@@ -51,6 +77,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.email ? true : false}
                             helperText={formErrors && formErrors.email}
                             required
+                            value={content && content.phone}
                         />
 
                         <TextField
@@ -60,6 +87,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.street ? true : false}
                             helperText={formErrors && formErrors.street}
                             required
+                            value={content && content.email}
                         />
                     </div>
                     <TextField
@@ -68,6 +96,7 @@ const EditCard = () => {
                         label='Website URL'
                         error={formErrors && formErrors.houseNumber ? true : false}
                         helperText={formErrors && formErrors.houseNumber}
+                        value={content && content.web}
                     />
                     <TextField
                         id="outlined-error-helper-text"
@@ -75,11 +104,13 @@ const EditCard = () => {
                         label='Image URL'
                         error={formErrors && formErrors.city ? true : false}
                         helperText={formErrors && formErrors.city}
+                        value={content && content.image.url}
                     />
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
                         label='Image Description'
+                        value={content && content.image.alt}
                     />
 
                     <div className='flex justify-around'>
@@ -89,6 +120,7 @@ const EditCard = () => {
                             label='Street'
                             error={formErrors && formErrors.country ? true : false}
                             helperText={formErrors && formErrors.country}
+                            value={content && content.address.street}
                             required
                         />
                         <TextField
@@ -97,6 +129,7 @@ const EditCard = () => {
                             label='House Number'
                             error={formErrors && formErrors.zip ? true : false}
                             helperText={formErrors && formErrors.zip}
+                            value={content && content.address.houseNumber}
                             required
                         />
                     </div>
@@ -108,6 +141,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.country ? true : false}
                             helperText={formErrors && formErrors.country}
                             required
+                            value={content && content.address.city}
                         />
                         <TextField
                             id="outlined-error-helper-text"
@@ -116,6 +150,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.zip ? true : false}
                             helperText={formErrors && formErrors.zip}
                             required
+                            value={content && content.address.zip}
                         />
                     </div>
                     <div className='flex justify-around'>
@@ -126,6 +161,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.country ? true : false}
                             helperText={formErrors && formErrors.country}
                             required
+                            value={content && content.address.country}
                         />
                         <TextField
                             id="outlined-error-helper-text"
@@ -133,6 +169,7 @@ const EditCard = () => {
                             label='State'
                             error={formErrors && formErrors.zip ? true : false}
                             helperText={formErrors && formErrors.zip}
+                            value={content && content.address.state}
                         />
                     </div>
                 </div>

@@ -35,7 +35,7 @@ function App() {
             <Route path='/myFavorites' element={<Favorites />} />
             <Route path='/myCards' element={<MyCards />} />
             <Route path='/business/:id' element={<BusinessPage />} />
-            <Route path='/card/edit' element={<EditCard />} />
+            <Route path='/card/edit/:id' element={<EditCard />} />
 
 
           </Routes>
