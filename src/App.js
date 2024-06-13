@@ -36,6 +36,7 @@ function App() {
             <Route path='/myCards' element={<MyCards />} />
             <Route path='/business/:id' element={<BusinessPage />} />
             <Route path='/card/edit/:id' element={<EditCard />} />
+            <Route path='/card/edit/' element={<EditCard />} />
 
 
           </Routes>

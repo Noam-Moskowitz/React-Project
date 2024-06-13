@@ -14,8 +14,10 @@ const EditCard = () => {
     const { validate, ACTION_TYPES, formErrors } = useValidation();
 
     const [content, setContent] = useState()
+    const [isCreate, setIsCreate] = useState(!id ? true : false)
 
     useEffect(() => {
+        if (isCreate) return
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/`,
             METHOD.GET_ONE,
@@ -49,18 +51,27 @@ const EditCard = () => {
         if (!validate({ type: ACTION_TYPES.CARD, payload: content })) return
 
 
-        const updateContent = cleanObject(content);
+        const cleanedObject = cleanObject(content);
         const token = localStorage.getItem(`token`)
+        let newRequest;
 
-        const newRequest = new RequestObject(
-            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${content._id}`,
-            METHOD.UPDATE_CARD,
-            updateContent,
-            token
-        )
+        if (isCreate) {
+            newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards`,
+                METHOD.CREATE_CARD,
+                cleanedObject,
+                token
+            )
+        } else {
+            newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${content._id}`,
+                METHOD.UPDATE_CARD,
+                cleanedObject,
+                token
+            )
+        }
 
         callApi(newRequest);
-
 
     }
 
@@ -145,7 +156,7 @@ const EditCard = () => {
                         label='Image URL'
                         error={formErrors && formErrors.imageUrl ? true : false}
                         helperText={formErrors && formErrors.imageUrl}
-                        value={content && content.image.url}
+                        value={content && content.image && content.image.url}
                         onChange={(e) => setContent({ ...content, image: { ...content.image, url: e.target.value } })}
                         required
                     />
@@ -155,7 +166,7 @@ const EditCard = () => {
                         label='Image Description'
                         error={formErrors && formErrors.imageDescription ? true : false}
                         helperText={formErrors && formErrors.imageDescription}
-                        value={content && content.image.alt}
+                        value={content && content.image && content.image.alt}
                         onChange={(e) => setContent({ ...content, image: { ...content.image, alt: e.target.value } })}
                         required
                     />
@@ -167,7 +178,7 @@ const EditCard = () => {
                             label='Street'
                             error={formErrors && formErrors.street ? true : false}
                             helperText={formErrors && formErrors.street}
-                            value={content && content.address.street}
+                            value={content && content.address && content.address.street}
                             onChange={(e) => setContent(
                                 { ...content, address: { ...content.address, street: e.target.value } }
                             )}
@@ -179,7 +190,7 @@ const EditCard = () => {
                             label='House Number'
                             error={formErrors && formErrors.houseNumber ? true : false}
                             helperText={formErrors && formErrors.houseNumber}
-                            value={content && content.address.houseNumber}
+                            value={content && content.address && content.address.houseNumber}
                             required
                             onChange={(e) => setContent(
                                 { ...content, address: { ...content.address, houseNumber: e.target.value } }
@@ -194,7 +205,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.city ? true : false}
                             helperText={formErrors && formErrors.city}
                             required
-                            value={content && content.address.city}
+                            value={content && content.address && content.address.city}
                             onChange={(e) => setContent(
                                 { ...content, address: { ...content.address, city: e.target.value } }
                             )}
@@ -203,9 +214,9 @@ const EditCard = () => {
                             id="outlined-error-helper-text"
                             type="number"
                             label='Zip'
-                            value={content && content.address.zip}
+                            value={content && content.address && content.address.zip}
                             onChange={(e) => setContent(
-                                { ...content, zip: { ...content.address, street: e.target.value } }
+                                { ...content, address: { ...content.address, street: e.target.value } }
                             )}
                         />
                     </div>
@@ -217,7 +228,7 @@ const EditCard = () => {
                             error={formErrors && formErrors.country ? true : false}
                             helperText={formErrors && formErrors.country}
                             required
-                            value={content && content.address.country}
+                            value={content && content.address && content.address.country}
                             onChange={(e) => setContent(
                                 { ...content, address: { ...content.address, country: e.target.value } }
                             )}
@@ -228,7 +239,7 @@ const EditCard = () => {
                             label='State'
                             error={formErrors && formErrors.zip ? true : false}
                             helperText={formErrors && formErrors.zip}
-                            value={content && content.address.state}
+                            value={content && content.address && content.address.state}
                             onChange={(e) => setContent(
                                 { ...content, state: { ...content.address, street: e.target.value } }
                             )}

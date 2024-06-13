@@ -65,6 +65,17 @@ const useApi = () => {
                     responseData = response.data
                     break;
 
+                case METHOD.CREATE_CARD:
+
+                    response = await axios.post(URL, payload, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    })
+
+                    responseData = response.data
+                    break;
+
                 case METHOD.LIKE:
                     console.log(headers);
                     console.log(payload);
@@ -140,6 +151,7 @@ const useApi = () => {
         GET_ONE: `GET_ONE`,
         GET_MY_CARDS: `GET_MY_CARDS`,
         UPDATE_CARD: `UPDATE_CARD`,
+        CREATE_CARD: `CREATE_CARD`,
         LIKE: `LIKE`
     }
 
