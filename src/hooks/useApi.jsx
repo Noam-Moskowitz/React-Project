@@ -155,7 +155,7 @@ const useApi = () => {
         LIKE: `LIKE`
     }
 
-    return { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD }
+    return { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD, method }
 }
 
 export default useApi

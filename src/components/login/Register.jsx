@@ -7,30 +7,32 @@ import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import CustomLoader from '../loaders/CustomLoader';
 import useThemeColor from '../../hooks/useThemeColor';
+import useValidation from '../../hooks/useValidation';
 
 const Register = () => {
-    const [name, setName] = useState({ first: null, last: null });
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
+    const [user, setUser] = useState({});
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
-    const [address, setAddress] = useState({
-        country: null,
-        city: null,
-        street: null,
-        houseNumber: null,
-        zip: null,
-    });
+
     const [isBuisness, setIsBusiness] = useState(false);
 
-    const [formErrors, setFormErrors] = useState();
 
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
+    const { validate, ACTION_TYPES, formErrors } = useValidation();
 
     const { primaryColor, backgroundColor } = useThemeColor();
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        const userObj = {
+            ...user,
+            password: {
+                password: password, confirmPassword: confirmPassword
+            }
+        }
+
+        validate({ type: ACTION_TYPES.REGISTER, payload: userObj });
         let validationErrors = {}
 
         for (const key in name) {
@@ -125,7 +127,7 @@ const Register = () => {
                         label='First Name'
                         error={formErrors && formErrors.first ? true : false}
                         helperText={formErrors && formErrors.first}
-                        onChange={(e) => setName({ ...name, first: e.target.value })}
+                        onChange={(e) => setUser({ ...user, name: { ...user.name, first: e.target.value } })}
                         required
                     />
                     <TextField
@@ -134,7 +136,7 @@ const Register = () => {
                         label='Last Name'
                         error={formErrors && formErrors.last ? true : false}
                         helperText={formErrors && formErrors.last}
-                        onChange={(e) => setName({ ...name, last: e.target.value })}
+                        onChange={(e) => setUser({ ...user, name: { ...user.name, last: e.target.value } })}
                         required
                     />
                 </div>
@@ -145,7 +147,7 @@ const Register = () => {
                         label='Phone Number'
                         error={formErrors && formErrors.phone ? true : false}
                         helperText={formErrors && formErrors.phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => setUser({ ...user, phone: e.target.value })}
                         required
                     />
                     <TextField
@@ -154,7 +156,7 @@ const Register = () => {
                         label='Email'
                         error={formErrors && formErrors.email ? true : false}
                         helperText={formErrors && formErrors.email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setUser({ ...user, email: e.target.value })}
                         required
                     />
                 </div>
@@ -183,7 +185,7 @@ const Register = () => {
                         label='Street'
                         error={formErrors && formErrors.street ? true : false}
                         helperText={formErrors && formErrors.street}
-                        onChange={(e) => setAddress({ ...address, street: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, street: e.target.value } })}
                         required
                     />
                     <TextField
@@ -192,7 +194,7 @@ const Register = () => {
                         label='House Number'
                         error={formErrors && formErrors.houseNumber ? true : false}
                         helperText={formErrors && formErrors.houseNumber}
-                        onChange={(e) => setAddress({ ...address, houseNumber: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, houseNumber: e.target.value } })}
                         required
                     />
                 </div>
@@ -203,13 +205,13 @@ const Register = () => {
                         label='City'
                         error={formErrors && formErrors.city ? true : false}
                         helperText={formErrors && formErrors.city}
-                        onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, city: e.target.value } })}
                         required
                     />
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
-                        onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, state: e.target.value } })}
                         label='State'
                     />
                 </div>
@@ -220,7 +222,7 @@ const Register = () => {
                         label='country'
                         error={formErrors && formErrors.country ? true : false}
                         helperText={formErrors && formErrors.country}
-                        onChange={(e) => setAddress({ ...address, country: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, country: e.target.value } })}
                         required
                     />
                     <TextField
@@ -229,7 +231,7 @@ const Register = () => {
                         label='Zip'
                         error={formErrors && formErrors.zip ? true : false}
                         helperText={formErrors && formErrors.zip}
-                        onChange={(e) => setAddress({ ...address, zip: e.target.value })}
+                        onChange={(e) => setUser({ ...user, address: { ...user.address, zip: e.target.value } })}
                         required
                     />
                 </div>

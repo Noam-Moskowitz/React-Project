@@ -73,6 +73,11 @@ const useValidation = () => {
 
                 break;
 
+            case ACTION_TYPES.REGISTER:
+                const {
+                    name,
+                    password
+                } = payload;
         }
 
         if (Object.keys(validationErrors).length == 0) return true
@@ -83,7 +88,8 @@ const useValidation = () => {
 
 
     const ACTION_TYPES = {
-        CARD: `CARD`
+        CARD: `CARD`,
+        REGISTER: `REGISTER`
     }
 
     return { validate, ACTION_TYPES, formErrors }

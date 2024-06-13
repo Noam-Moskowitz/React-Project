@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material'
+import { Alert, Button, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import useThemeColor from '../../hooks/useThemeColor';
 import { useParams } from 'react-router-dom';
@@ -10,11 +10,11 @@ import useValidation from '../../hooks/useValidation';
 const EditCard = () => {
     const { id } = useParams();
     const { primaryColor, backgroundColor } = useThemeColor();
-    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD } = useApi();
+    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD, method } = useApi();
     const { validate, ACTION_TYPES, formErrors } = useValidation();
 
     const [content, setContent] = useState()
-    const [isCreate, setIsCreate] = useState(!id ? true : false)
+    const [isCreate] = useState(!id ? true : false)
 
     useEffect(() => {
         if (isCreate) return
@@ -79,12 +79,14 @@ const EditCard = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div className='px-80 py-20'>
+        <div className='flex justify-center py-20'>
             <form
-                className='border-4 px-20 rounded  py-10 flex-col'
+                className='border-4 px-20 rounded w-[50vw]  py-10 flex-col'
                 style={{ backgroundColor: backgroundColor, borderColor: primaryColor }}
             >
-                <h1 className='font-bold text-center text-3xl pb-6 underline' >Edit Card</h1>
+                <h1
+                    className='font-bold text-center text-3xl pb-6 underline'
+                >{isCreate ? `Create Card` : `Edit Card`}</h1>
                 <div className='flex flex-col   my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
@@ -250,6 +252,31 @@ const EditCard = () => {
                     <Button style={{ width: '100%' }} variant='contained' onClick={handleSubmit}>Submit</Button>
                 </div>
             </form >
+
+
+            {errorFlag &&
+                <div className='flex justify-center fixed top-12'>
+                    <Alert
+                        className='animate-bounce'
+                        severity='error'
+                    >{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
+                </div>
+            }
+            {successFlag && method !== METHOD.GET_ONE &&
+                <div className='flex justify-center  w-screen fixed top-12 '>
+                    {isCreate ?
+                        <Alert
+                            className='animate-bounce'
+                            severity='success'
+                        >Card created Succesfully!</Alert>
+                        :
+                        <Alert
+                            className='animate-bounce'
+                            severity='success'
+                        >Card updated succesfully!</Alert>}
+                </div>
+            }
+
         </div >
     )
 }
