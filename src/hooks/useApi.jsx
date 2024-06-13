@@ -8,12 +8,12 @@ const useApi = () => {
     const [method, setMethod] = useState();
     const [headers, setHeaders] = useState(null);
     const [payload, setPayload] = useState(null);
-    const [requestFlag,setRequestFlag]=useState(false);
+    const [requestFlag, setRequestFlag] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
     const [apiErrors, setApiErrors] = useState();
     const [errorFlag, setErrorFlag] = useState(false);
-    const [successFlag, setSuccessFlag]= useState(false);
+    const [successFlag, setSuccessFlag] = useState(false);
 
 
     const initRequest = async () => {
@@ -49,9 +49,20 @@ const useApi = () => {
                     break;
 
                 case METHOD.GET_ONE:
-                    response= await axios.get(URL+payload);
+                    response = await axios.get(URL + payload);
 
-                    responseData=response.data
+                    responseData = response.data
+                    break;
+
+                case METHOD.UPDATE_CARD:
+
+                    response = await axios.put(URL, payload, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    })
+
+                    responseData = response.data
                     break;
 
                 case METHOD.LIKE:
@@ -89,7 +100,7 @@ const useApi = () => {
 
 
     const callApi = (requestObj) => {
-        const { rUrl, rMethod, rHeaders, rPayload} = requestObj;
+        const { rUrl, rMethod, rHeaders, rPayload } = requestObj;
 
         setURL(rUrl);
         setMethod(rMethod);
@@ -113,21 +124,22 @@ const useApi = () => {
         }
     }, [apiErrors])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (data) {
             setSuccessFlag(true);
             setTimeout(() => {
                 setSuccessFlag(false)
             }, 1500)
         }
-    },[data])
+    }, [data])
 
     const METHOD = {
         LOGIN: `LOGIN`,
         REGISTER: `REGISTER`,
         GET_ALL: `GET_ALL`,
-        GET_ONE:`GET_ONE`,
+        GET_ONE: `GET_ONE`,
         GET_MY_CARDS: `GET_MY_CARDS`,
+        UPDATE_CARD: `UPDATE_CARD`,
         LIKE: `LIKE`
     }
 
