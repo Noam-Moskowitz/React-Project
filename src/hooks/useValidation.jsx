@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { testEmail } from '../utils/utls';
+import { testEmail, testPassword } from '../utils/utls';
 
 const useValidation = () => {
 
@@ -9,6 +9,7 @@ const useValidation = () => {
         const { type, payload } = formContent;
         let validationErrors = {};
 
+        // eslint-disable-next-line default-case
         switch (type) {
             case ACTION_TYPES.CARD:
                 const {
@@ -78,6 +79,44 @@ const useValidation = () => {
                     name,
                     password
                 } = payload;
+
+
+                const newObject = {
+                    firstName: name.first,
+                    lastName: name.last,
+                    ...payload.address
+                    };
+
+                    console.log(newObject);
+
+                    delete newObject.state
+
+                for (const key in newObject) {
+
+                    const value = newObject[key];
+                    console.log(key);
+                    if (value.length < 2 || value.length > 256) {
+                        validationErrors[key] = `${key} must be between 2-256 characters`;
+                    }
+                }
+
+                if (payload.phone.length<9||payload.phone.length>11) {
+                    validationErrors[`phone`]=`Phone Number must be between 9-11 characters`
+                }
+
+                if (!testEmail(payload.email)) {
+                    validationErrors[`email`] = `Please enter a valid email`
+                }
+
+                if (!testPassword(password.password)) {
+                    validationErrors[`password`] = `Please enter a valid password`
+                }
+
+                if (password.password !== password.confirmPassword) {
+                    validationErrors[`confirmPassword`] = `Value doesnt match password`
+                }
+
+            break;
         }
 
         if (Object.keys(validationErrors).length == 0) return true

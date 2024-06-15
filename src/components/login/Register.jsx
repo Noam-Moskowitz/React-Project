@@ -1,5 +1,4 @@
-import { Alert, Button, TextField } from '@mui/material'
-import Checkbox from '@mui/joy/Checkbox';
+import { Alert, Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
 import { testEmail, testPassword } from '../../utils/utls';
@@ -10,7 +9,22 @@ import useThemeColor from '../../hooks/useThemeColor';
 import useValidation from '../../hooks/useValidation';
 
 const Register = () => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        name: {
+            first: '',
+            last: ''
+        },
+        phone: '',
+        email: '',
+        address: {
+            state: '',
+            country: '',
+            city: '',
+            street: '',
+            houseNumber: '',
+            zip: ''
+        }
+    });
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
 
@@ -32,57 +46,18 @@ const Register = () => {
             }
         }
 
-        validate({ type: ACTION_TYPES.REGISTER, payload: userObj });
-        let validationErrors = {}
+        console.log(userObj);
 
-        for (const key in name) {
+        if (!validate({ type: ACTION_TYPES.REGISTER, payload: userObj })) return
 
-            if (name.hasOwnProperty(key)) {
-                let value = name[key];
-                if (!value || value.length < 2 || value.length > 256) {
-                    validationErrors[key] = `${key} name must be 2-256 characters`
-                }
-            }
-        }
-
-        if (!phone || phone.length < 9 || phone.length > 11) {
-            validationErrors[`phone`] = `Phone number  must be 9-11 characters`
-        }
-
-        if (!testEmail(email)) {
-            validationErrors[`email`] = `Please enter a valid email`
-        }
-
-        if (!testPassword(password)) {
-            validationErrors[`password`] = `Please enter a valid password`
-        }
-
-        if (password !== confirmPassword) {
-            validationErrors[`confirmPassword`] = `Value doesnt match password`
-        }
-
-        for (const key in address) {
-            if (key == `state`) break
-            if (address.hasOwnProperty(key)) {
-                let value = address[key];
-                if (!value || value.length < 2 || value.length > 256) {
-                    validationErrors[key] = `${key} must be 2-256 characters`
-                }
-            }
-        }
-
-        setFormErrors(validationErrors)
-
-
-        if (Object.keys(validationErrors).length === 0) {
 
             const formData = {
-                name: name,
-                phone: phone,
-                email: email,
+                name: user.name,
+                phone: user.phone,
+                email: user.email,
                 password: password,
                 image: {},
-                address: address,
+                address: user.address,
                 isBusiness: isBuisness
             }
 
@@ -96,7 +71,6 @@ const Register = () => {
             callApi(newRequest)
         }
 
-    }
 
     useEffect(() => {
         if (data) {
@@ -125,8 +99,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='First Name'
-                        error={formErrors && formErrors.first ? true : false}
-                        helperText={formErrors && formErrors.first}
+                        error={formErrors && formErrors.firstName ? true : false}
+                        helperText={formErrors && formErrors.firstName}
                         onChange={(e) => setUser({ ...user, name: { ...user.name, first: e.target.value } })}
                         required
                     />
@@ -134,8 +108,8 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='Last Name'
-                        error={formErrors && formErrors.last ? true : false}
-                        helperText={formErrors && formErrors.last}
+                        error={formErrors && formErrors.lastName ? true : false}
+                        helperText={formErrors && formErrors.lastName}
                         onChange={(e) => setUser({ ...user, name: { ...user.name, last: e.target.value } })}
                         required
                     />
@@ -236,7 +210,14 @@ const Register = () => {
                     />
                 </div>
                 <div className='my-6'>
-                    {/* <Checkbox label="Business Account" color="primary" onChange={(e) => setIsBusiness(e.target.checked)} /> */}
+                    <FormControlLabel  
+                        control={
+                            <Checkbox  
+                                onChange={(e) => setIsBusiness(e.target.checked)}  
+                            />
+                        } 
+                        label="Business Account" 
+                    />
                 </div>
                 <div>
                     <Button style={{ width: '100%' }} onClick={handleSubmit} variant='contained'>Submit</Button>
