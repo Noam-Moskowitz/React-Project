@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useThemeColor from '../../hooks/useThemeColor';
 import { useNavigate } from 'react-router-dom';
-import { Badge, Modal, Box, Button, Typography } from '@mui/material';
+import { Badge, Modal, Box, Button, Typography, Tooltip } from '@mui/material';
 
 const Card = ({ content }) => {
 
@@ -130,19 +130,23 @@ const Card = ({ content }) => {
                 <div className='flex items-center justify-center gap-8'>
                     {userInfo._id === content.user_id &&
                         <div className='flex gap-8'>
-                            <div
-                                className='hover:bg-blue-200 rounded-md p-2 hover:cursor-pointer'
-                                onClick={() => navigate(`/card/edit/${content._id}`)}
-                            >
-                                <EditIcon color='primary' />
-                            </div>
-                            <div
-                                className='hover:bg-red-200 rounded-md p-2 hover:cursor-pointer'
-                                onClick={() => setOpen(!open)}
-                            >
-                                <DeleteIcon color='error' />
+                            <Tooltip title='Edit'>
+                                <div
+                                    className='hover:bg-blue-200 rounded-md p-2 hover:cursor-pointer'
+                                    onClick={() => navigate(`/card/edit/${content._id}`)}
+                                >
+                                    <EditIcon color='primary' />
+                                </div>
+                            </Tooltip>
+                            <Tooltip title="Delete">
+                                <div
+                                    className='hover:bg-red-200 rounded-md p-2 hover:cursor-pointer'
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <DeleteIcon color='error' />
 
-                            </div>
+                                </div>
+                            </Tooltip>
                             <Modal
                                 open={open}
                                 onClose={() => setOpen(false)}
@@ -182,14 +186,16 @@ const Card = ({ content }) => {
                         </div>
                     }
                     <div>
-                        <div
-                            className='hover:cursor-pointer active:animate-ping'
-                            onClick={handleLike}
-                        >
-                            <Badge color='primary' invisible={likeAmount > 0 ? false : true} badgeContent={likeAmount}>
-                                {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
-                            </Badge>
-                        </div>
+                        <Tooltip title='Favorite'>
+                            <div
+                                className='hover:cursor-pointer active:animate-ping'
+                                onClick={handleLike}
+                            >
+                                <Badge color='primary' invisible={likeAmount > 0 ? false : true} badgeContent={likeAmount}>
+                                    {isLiked ? <FavoriteIcon color='primary' /> : <FavoriteBorderIcon />}
+                                </Badge>
+                            </div>
+                        </Tooltip>
                     </div>
                 </div>
             }
