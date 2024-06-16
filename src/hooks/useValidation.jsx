@@ -85,11 +85,11 @@ const useValidation = () => {
                     firstName: name.first,
                     lastName: name.last,
                     ...payload.address
-                    };
+                };
 
-                    console.log(newObject);
+                console.log(newObject);
 
-                    delete newObject.state
+                delete newObject.state
 
                 for (const key in newObject) {
 
@@ -100,8 +100,8 @@ const useValidation = () => {
                     }
                 }
 
-                if (payload.phone.length<9||payload.phone.length>11) {
-                    validationErrors[`phone`]=`Phone Number must be between 9-11 characters`
+                if (payload.phone.length < 9 || payload.phone.length > 11) {
+                    validationErrors[`phone`] = `Phone Number must be between 9-11 characters`
                 }
 
                 if (!testEmail(payload.email)) {
@@ -116,7 +116,18 @@ const useValidation = () => {
                     validationErrors[`confirmPassword`] = `Value doesnt match password`
                 }
 
-            break;
+                break;
+
+            case ACTION_TYPES.LOGIN:
+                if (!testEmail(payload.email)) {
+                    validationErrors[`email`] = `Please enter a valid email address`
+                }
+
+                if (!testPassword(payload.password)) {
+                    validationErrors[`password`] = `Please enter a valid password`
+                }
+
+                break;
         }
 
         if (Object.keys(validationErrors).length == 0) return true
@@ -128,7 +139,8 @@ const useValidation = () => {
 
     const ACTION_TYPES = {
         CARD: `CARD`,
-        REGISTER: `REGISTER`
+        REGISTER: `REGISTER`,
+        LOGIN: `LOGIN`
     }
 
     return { validate, ACTION_TYPES, formErrors }

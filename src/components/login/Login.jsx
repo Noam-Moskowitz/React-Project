@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomLoader from '../loaders/CustomLoader';
 import Alert from '@mui/material/Alert';
 import useThemeColor from '../../hooks/useThemeColor';
+import useValidation from '../../hooks/useValidation';
 
 
 
@@ -21,9 +22,9 @@ const Login = () => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [formErrors, setFormErrors] = useState();
 
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
+    const { validate, ACTION_TYPES, formErrors } = useValidation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -35,30 +36,18 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const validationErrors = {};
 
-
-        if (!testEmail(email)) {
-            validationErrors[`email`] = `Please enter a valid email address`
+        const loginObject = {
+            email: email,
+            password: password
         }
 
-        if (!testPassword(password)) {
-            validationErrors[`password`] = `Please enter a valid password`
-        }
-
-        setFormErrors(validationErrors)
-
-        if (validationErrors[`password`] || validationErrors[`email`]) {
-            return
-        }
+        if (!validate({ type: ACTION_TYPES.LOGIN, payload: loginObject })) return
 
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/login`,
             METHOD.LOGIN,
-            {
-                email: email,
-                password: password
-            }
+            loginObject
         );
 
         callApi(newRequest)
