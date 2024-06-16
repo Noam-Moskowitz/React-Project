@@ -5,7 +5,8 @@ export const userInfoSlice = createSlice({
     initialState: {
         _id: null,
         isBusiness: null,
-        isAdmin: null
+        isAdmin: null,
+        iat: null
     },
     reducers: {
         saveInfo: (state, action) => {

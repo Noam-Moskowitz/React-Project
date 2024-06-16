@@ -21,7 +21,8 @@ const useToken = () => {
             dispatch(saveInfo({
                 _id: null,
                 isBusiness: null,
-                isAdmin: null
+                isAdmin: null,
+                iat: null
             }))
             return false
         }
