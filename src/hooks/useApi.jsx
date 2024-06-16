@@ -77,13 +77,6 @@ const useApi = () => {
                     break;
 
                 case METHOD.LIKE:
-                    console.log(headers);
-                    console.log(payload);
-                    console.log(`${URL}/${payload}`, {
-                        headers: {
-                            'x-auth-token': headers
-                        }
-                    });
                     response = await axios.patch(`${URL}${payload}`, {}, {
                         headers: {
                             'x-auth-token': headers
@@ -91,6 +84,20 @@ const useApi = () => {
                     })
 
                     responseData = response.data
+                    break;
+
+                case METHOD.DELETE:
+                    response = await axios.delete(URL, {
+                        headers: {
+                            'x-auth-token': headers
+                        },
+                        data: {
+                            bizNumber: payload
+                        }
+                    })
+
+                    responseData = response.data
+                    break;
             }
 
             setData(responseData)
@@ -152,7 +159,8 @@ const useApi = () => {
         GET_MY_CARDS: `GET_MY_CARDS`,
         UPDATE_CARD: `UPDATE_CARD`,
         CREATE_CARD: `CREATE_CARD`,
-        LIKE: `LIKE`
+        LIKE: `LIKE`,
+        DELETE: `DELETE`
     }
 
     return { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD, method }

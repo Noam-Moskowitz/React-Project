@@ -51,30 +51,30 @@ const Register = () => {
         if (!validate({ type: ACTION_TYPES.REGISTER, payload: userObj })) return
 
 
-            const formData = {
-                name: user.name,
-                phone: user.phone,
-                email: user.email,
-                password: password,
-                image: {},
-                address: user.address,
-                isBusiness: isBuisness
-            }
-
-            const newRequest = new RequestObject(
-                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
-                METHOD.REGISTER,
-                formData
-            )
-
-
-            callApi(newRequest)
+        const formData = {
+            name: user.name,
+            phone: user.phone,
+            email: user.email,
+            password: password,
+            image: {},
+            address: user.address,
+            isBusiness: isBuisness
         }
+
+        const newRequest = new RequestObject(
+            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
+            METHOD.REGISTER,
+            formData
+        )
+
+
+        callApi(newRequest)
+    }
 
 
     useEffect(() => {
         if (data) {
-            console.log(data);
+
         }
     }, [data])
 
@@ -210,13 +210,13 @@ const Register = () => {
                     />
                 </div>
                 <div className='my-6'>
-                    <FormControlLabel  
+                    <FormControlLabel
                         control={
-                            <Checkbox  
-                                onChange={(e) => setIsBusiness(e.target.checked)}  
+                            <Checkbox
+                                onChange={(e) => setIsBusiness(e.target.checked)}
                             />
-                        } 
-                        label="Business Account" 
+                        }
+                        label="Business Account"
                     />
                 </div>
                 <div>
