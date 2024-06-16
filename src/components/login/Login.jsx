@@ -13,6 +13,7 @@ import CustomLoader from '../loaders/CustomLoader';
 import Alert from '@mui/material/Alert';
 import useThemeColor from '../../hooks/useThemeColor';
 import useValidation from '../../hooks/useValidation';
+import useToken from '../../hooks/useToken';
 
 
 
@@ -25,6 +26,7 @@ const Login = () => {
 
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
     const { validate, ACTION_TYPES, formErrors } = useValidation()
+    const { decodeToken, token } = useToken()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -57,9 +59,8 @@ const Login = () => {
 
     useEffect(() => {
         if (data) {
-            const token = data;
-            localStorage.setItem(`token`, token)
-            const decodedToken = jwtDecode(token);
+            localStorage.setItem(`token`, data)
+            const decodedToken = decodeToken(data)
             dispatch(saveInfo(decodedToken));
             navigate('/')
         }

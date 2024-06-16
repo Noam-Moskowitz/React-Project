@@ -9,6 +9,7 @@ import useThemeColor from '../../hooks/useThemeColor';
 import NavItem from './NavItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchBar from './SearchBar';
+import useToken from '../../hooks/useToken';
 
 const TopNav = () => {
 
@@ -17,6 +18,7 @@ const TopNav = () => {
 
     const dispatch = useDispatch()
     const { primaryColor, contrastTextColor, backgroundColor, textColor } = useThemeColor();
+    const { checkToken } = useToken();
 
     const [authKeys, setAuthKeys] = useState()
     const [selectedNav, setSelectedNav] = useState()
@@ -34,6 +36,10 @@ const TopNav = () => {
             setDisplay(`hidden`)
         }
     }, [expanded])
+
+    useEffect(() => {
+        checkToken()
+    }, [])
 
 
 
