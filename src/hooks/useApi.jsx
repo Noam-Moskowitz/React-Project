@@ -49,7 +49,15 @@ const useApi = () => {
                     break;
 
                 case METHOD.GET_ONE:
-                    response = await axios.get(URL + payload);
+                    if (headers) {
+                        response = await axios.get(URL, {
+                            headers: {
+                                'x-auth-token': headers
+                            }
+                        })
+                    } else {
+                        response = await axios.get(URL);
+                    }
 
                     responseData = response.data
                     break;
@@ -77,7 +85,7 @@ const useApi = () => {
                     break;
 
                 case METHOD.LIKE:
-                    response = await axios.patch(`${URL}${payload}`, {}, {
+                    response = await axios.patch(URL, {}, {
                         headers: {
                             'x-auth-token': headers
                         }
@@ -118,6 +126,7 @@ const useApi = () => {
 
 
     const callApi = (requestObj) => {
+        console.log(requestObj);
         const { rUrl, rMethod, rHeaders, rPayload } = requestObj;
 
         setURL(rUrl);

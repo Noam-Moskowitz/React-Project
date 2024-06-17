@@ -10,6 +10,7 @@ import NavItem from './NavItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchBar from './SearchBar';
 import useToken from '../../hooks/useToken';
+import UserIcon from './UserIcon';
 
 const TopNav = () => {
 
@@ -18,7 +19,7 @@ const TopNav = () => {
 
     const dispatch = useDispatch()
     const { primaryColor, contrastTextColor, backgroundColor, textColor } = useThemeColor();
-    const { checkToken } = useToken();
+    const { token, checkToken } = useToken();
 
     const [authKeys, setAuthKeys] = useState()
     const [selectedNav, setSelectedNav] = useState()
@@ -72,9 +73,7 @@ const TopNav = () => {
                     </div>
                     <div>
                         {authKeys && authKeys._id &&
-                            <Avatar
-                                color='primary'
-                            >NM</Avatar>
+                            <UserIcon />
                         }
                     </div>
                 </div>
@@ -163,9 +162,7 @@ const TopNav = () => {
 
                         </div> :
                         <div className='hidden md:block'>
-                            <Avatar
-                                color='primary'
-                            >NM</Avatar>
+                            <UserIcon id={authKeys && authKeys._id} token={token} />
                         </div>
                     }
                 </div>

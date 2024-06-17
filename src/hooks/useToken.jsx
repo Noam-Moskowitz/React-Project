@@ -16,6 +16,7 @@ const useToken = () => {
         if (token) {
             const decodedToken = decodeToken(token);
             dispatch(saveInfo(decodedToken));
+            console.log(decodedToken);
             return true;
         } else {
             dispatch(saveInfo({
