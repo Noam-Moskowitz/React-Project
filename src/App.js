@@ -32,8 +32,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/myFavorites' element={<Favorites />} />
-            <Route path='/myCards' element={<MyCards />} />
+            <Route path='/cards/:type' element={<Home />} />
+            <Route path='/cards/:type' element={<Home />} />
             <Route path='/business/:id' element={<BusinessPage />} />
             <Route path='/card/edit/:id' element={<EditCard />} />
             <Route path='/card/create' element={<EditCard />} />

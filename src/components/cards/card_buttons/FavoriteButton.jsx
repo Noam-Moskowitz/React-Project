@@ -43,7 +43,7 @@ const FavoriteButton = ({ likesArr, likesCount, id, userId }) => {
     }, [])
 
     useEffect(() => {
-        if (id) {
+        if (isLiked) {
             setLikeAmount(likeAmount + 1)
         } else {
             setLikeAmount(likeAmount - 1)

@@ -1,12 +1,17 @@
 import { Avatar, ClickAwayListener, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Popper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useApi from '../../hooks/useApi.jsx'
 import { RequestObject } from '../../models/RequestObject.js'
+import { useDispatch } from 'react-redux';
+import { saveInfo } from '../../store/userInfoSlice.js'
+import { useNavigate } from 'react-router-dom';
 
 const UserIcon = ({ id, token }) => {
     const { data, callApi, METHOD } = useApi();
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
@@ -15,6 +20,19 @@ const UserIcon = ({ id, token }) => {
     const handleClick = (e) => {
         setOpen(!open)
         setAnchorEl(e.currentTarget)
+    }
+
+    const handleLogOut = () => {
+        dispatch(saveInfo(
+            {
+                _id: null,
+                isBusiness: null,
+                isAdmin: null,
+                iat: null
+            }
+        ));
+
+        navigate(`/`)
     }
 
     useEffect(() => {
@@ -55,6 +73,7 @@ const UserIcon = ({ id, token }) => {
                 open={open}
                 placement="bottom"
                 anchorEl={anchorEl}
+                className='z-50'
             >
                 <ClickAwayListener onClickAway={() => setOpen(false)}>
                     <Paper className='p-2'>
@@ -62,13 +81,13 @@ const UserIcon = ({ id, token }) => {
                             <ListItem disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
-                                        <SettingsIcon />
+                                        <PersonIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Settings" />
+                                    <ListItemText primary="Profile" />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton>
+                                <ListItemButton onClick={handleLogOut}>
                                     <ListItemIcon>
                                         <LogoutIcon />
                                     </ListItemIcon>

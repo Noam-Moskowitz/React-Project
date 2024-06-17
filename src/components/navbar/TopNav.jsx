@@ -104,7 +104,7 @@ const TopNav = () => {
                             setSelectedNav={setSelectedNav}
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='My Favorites'
-                            linkTo='/myFavorites'
+                            linkTo='cards/myFavorites'
                         />
                     }
                     {authKeys && authKeys.isBusiness &&
@@ -113,7 +113,7 @@ const TopNav = () => {
                             setSelectedNav={setSelectedNav}
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='My Cards'
-                            linkTo='/myCards'
+                            linkTo='cards/myCards'
                         />
                     }
                     {authKeys && authKeys.isAdmin &&
