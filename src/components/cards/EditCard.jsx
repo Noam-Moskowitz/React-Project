@@ -217,7 +217,7 @@ const EditCard = () => {
                             label='Zip'
                             value={content && content.address && content.address.zip}
                             onChange={(e) => setContent(
-                                { ...content, address: { ...content.address, street: e.target.value } }
+                                { ...content, address: { ...content.address, zip: e.target.value } }
                             )}
                         />
                     </div>
