@@ -7,6 +7,7 @@ import { RequestObject } from '../../models/RequestObject';
 import { useSelector } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import LanguageIcon from '@mui/icons-material/Language';
 
 import useThemeColor from '../../hooks/useThemeColor';
 import { useNavigate } from 'react-router-dom';
@@ -83,6 +84,22 @@ const Card2 = ({ content }) => {
                                         fontSize='small'
                                     />
                                     <div>{content.phone}</div>
+                                </div>
+                            </a>
+                            <a
+                                href={content.web}
+                                target='blank'
+                                noopener
+                                noreferer
+                            >
+                                <div
+                                    className='flex items-center gap-2'
+                                >
+                                    <LanguageIcon
+                                        color='primary'
+                                        fontSize='small'
+                                    />
+                                    <div>Visit Website</div>
                                 </div>
                             </a>
                         </div>
