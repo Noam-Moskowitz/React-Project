@@ -85,7 +85,11 @@ const CardsPage = () => {
                 </div>
             }
 
-            dd
+            {searchValue &&
+                <div className='flex justify-center pt-2 w-full text-lg'>
+                    {cards.length} Results Found!
+                </div>
+            }
             <div
                 className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-flow-cols-4 p-6 md:p-10  gap-8 '
                 style={{ backgroundColor: backgroundColor }}
