@@ -73,7 +73,7 @@ const CardsPage = () => {
     if (isLoading) return <SkeletonLoader />
 
     return (
-        <div className={cards.length<6?`h-screen`:``}>
+        <div className={cards&& cards.length<6?`h-screen`:``}>
             {userAuthKeys.isBusiness && type === `myCards` &&
                 <div div className='flex px-6 pt-6' >
                     <Button

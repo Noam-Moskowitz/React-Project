@@ -30,8 +30,7 @@ const BusinessPage = () => {
         <div className='p-5'>
             {content &&
                 <div className='w-full h-full flex flex-col items-center boder-4 rounded-lg'>
-                    <div className='w-full h-[35vh] flex justify-center items-center gap-4 border-2'>
-                        <div>
+                    <div className='w-full h-[35vh] flex flex-col justify-center items-center gap-4 border-2'>
                             <div className='text-6xl py-6 font-bold'>
                                 {content.title}
                             </div>
@@ -41,32 +40,31 @@ const BusinessPage = () => {
                             <div className='text-lg py-6'>
                                 {content.description}
                             </div>
-                        </div>
-                        <div className='w-96'>
-                            <img src={content.image.url} alt={content.image.alt} />
-                        </div>
                     </div>
                     <div className='w-full flex gap-3 justify-center border-2 p-4'>
                         <div>{content.phone}</div>
                         <div>{content.email}</div>
                         <div>{content.web}</div>
+                        <div className='flex gap-2'>
+                            <div>
+                                {content.address.street}
+                            </div>
+                            <div>
+                                {content.address.houseNumber},
+                            </div>
+                            <div>
+                                {content.address.city},
+                            </div>
+                            <div>
+                                {content.address.zip},
+                            </div>
+                            <div>
+                                {content.address.country}
+                            </div>
+                        </div>
                     </div>
-                    <div className='flex gap-2'>
-                        <div>
-                            {content.address.street}
-                        </div>
-                        <div>
-                            {content.address.houseNumber},
-                        </div>
-                        <div>
-                            {content.address.city},
-                        </div>
-                        <div>
-                            {content.address.zip},
-                        </div>
-                        <div>
-                            {content.address.country}
-                        </div>
+                   <div className='w-[600px] h-[400px] mt-4 rounded-lg overflow-hidden'>
+                            <img src={content.image.url} alt={content.image.alt} />
                     </div>
 
                 </div>
