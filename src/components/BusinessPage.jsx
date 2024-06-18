@@ -5,31 +5,31 @@ import { RequestObject } from '../models/RequestObject';
 
 const BusinessPage = () => {
 
-    const {id}= useParams();
-    const {data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD} = useApi();
+    const { id } = useParams();
+    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD } = useApi();
 
-    const [content,setContent]= useState();
+    const [content, setContent] = useState();
 
-    useEffect(()=>{
+    useEffect(() => {
         const newRequest = new RequestObject(
-            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/`,
+            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
             METHOD.GET_ONE,
-            id
         )
 
         callApi(newRequest);
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (data) {
+            console.log(data);
             setContent(data)
         }
-    },[data])
+    }, [data])
 
     return (
         <div className='p-5'>
             {content &&
-                <div  className='w-full h-full flex flex-col items-center boder-4 rounded-lg'>
+                <div className='w-full h-full flex flex-col items-center boder-4 rounded-lg'>
                     <div className='w-full h-[35vh] flex justify-center items-center gap-4 border-2'>
                         <div>
                             <div className='text-6xl py-6 font-bold'>
@@ -68,7 +68,7 @@ const BusinessPage = () => {
                             {content.address.country}
                         </div>
                     </div>
-                    
+
                 </div>
             }
         </div>
