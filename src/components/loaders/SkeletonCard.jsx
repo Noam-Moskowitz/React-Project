@@ -1,14 +1,38 @@
+import { Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material'
 import React from 'react'
 
 const SkeletonCard = () => {
     return (
-        <div className='flex flex-col gap-4  bg-gray-200 p-2 border-2 rounded-lg justify-between h-[80vh]'>
-            <div className='w-full h-[50%] bg-gray-400 rounded '></div>
-            <div className='bg-gray-400 rounded w-full h-15'></div>
-            <div className='bg-gray-400 rounded w-full h-20'></div>
-            <div className='bg-gray-400 rounded w-full h-10'></div>
-            <div className='bg-gray-400 rounded w-full h-15'></div>
-            <div className='bg-gray-400 rounded w-full h-5'></div>
+        <div>
+            <Card>
+                <CardHeader
+                    title={
+                        <div className='bg-gray-400 rounded w-full h-15'></div>
+                    }
+                    subheader={
+                        <div className='bg-gray-400 rounded w-full h-5'></div>
+                    }
+                />
+                <CardMedia
+                    sx={{height:240, backgroundColor:'gray'}}
+                />
+                <CardContent>
+                    <Typography>
+                        <div className='bg-gray-400 rounded w-full py-5'></div> 
+                    </Typography>
+                </CardContent>
+                <CardContent>
+                    <Typography>
+                        <div className='bg-gray-400 rounded w-full py-4'></div> 
+                    </Typography>
+                </CardContent>
+                <CardContent>
+                    <Typography>
+                        <div className='bg-gray-400 rounded w-full py-3'></div> 
+                    </Typography>
+                </CardContent>
+            </Card>
+            
         </div>
     )
 }

@@ -17,7 +17,6 @@ const CardsPage = () => {
     const userAuthKeys = useSelector(store => store.userInfo);
     const searchValue = useSelector(store => store.search);
     const { token, checkToken } = useToken();
-    const { backgroundColor } = useThemeColor();
     const { type } = useParams();
     const navigate = useNavigate();
 
@@ -74,7 +73,7 @@ const CardsPage = () => {
     if (isLoading) return <SkeletonLoader />
 
     return (
-        <div>
+        <div className={cards.length<6?`h-screen`:``}>
             {userAuthKeys.isBusiness && type === `myCards` &&
                 <div div className='flex px-6 pt-6' >
                     <Button
@@ -91,8 +90,7 @@ const CardsPage = () => {
                 </div>
             }
             <div
-                className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-flow-cols-4 p-6 md:p-10  gap-8 '
-                style={{ backgroundColor: backgroundColor }}
+                className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 xl:grid-flow-cols-4 p-6 md:p-10  gap-8 '
             >
                 {cards && cards.map(card => (<Card2 content={card} />))}
             </div>

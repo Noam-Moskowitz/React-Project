@@ -1,10 +1,7 @@
 import './App.css';
-
 import Login from './components/login/Login';
 import Register from './components/login/Register';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Favorites from './components/cards/Favorites';
-import MyCards from './components/cards/MyCards';
 import Home from './components/Home';
 import { ThemeProvider } from '@mui/material';
 import useAppTheme from './hooks/useAppTheme';

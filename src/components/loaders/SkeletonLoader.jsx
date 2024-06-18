@@ -6,9 +6,11 @@ const SkeletonLoader = () => {
     const { backgroundColor } = useThemeColor();
     return (
         <div
-            className='grid md:grid-cols-2 lg:grid-cols-3  gap-8 p-10 animate-pulse'
+            className='grid md:grid-cols-2 lg:grid-cols-4  gap-8 p-10 animate-pulse'
             style={{ backgroundColor: backgroundColor }}
         >
+            <SkeletonCard />
+            <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />

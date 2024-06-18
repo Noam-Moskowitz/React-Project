@@ -34,11 +34,13 @@ const Card2 = ({ content }) => {
         >
             <Card>
                 <CardHeader
+                    style={{position:`relative`}}
                     title={content.title}
                     subheader={content.subtitle}
                     action={
                         hovering && (
                             <Button
+                                style={{position:'absolute' }}
                                 className='slide-in'
                                 color='primary'
                                 variant='contained'
