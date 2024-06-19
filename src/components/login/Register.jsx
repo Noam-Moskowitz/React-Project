@@ -109,12 +109,13 @@ const Register = () => {
                 <h1
                     className='text-4xl text-center font-bold pb-6 uppercase'
                     style={{ color: primaryColor }}
-                >Register</h1>
+                >{id ? `Edit Profile` : `Register`}</h1>
                 <div className='flex flex-col md:flex-row my-6 justify-center gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
                         label='First Name'
+                        value={user.name.first}
                         error={formErrors && formErrors.firstName ? true : false}
                         helperText={formErrors && formErrors.firstName}
                         onChange={(e) => setUser({ ...user, name: { ...user.name, first: e.target.value } })}
@@ -124,6 +125,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='Last Name'
+                        value={user.name.last}
                         error={formErrors && formErrors.lastName ? true : false}
                         helperText={formErrors && formErrors.lastName}
                         onChange={(e) => setUser({ ...user, name: { ...user.name, last: e.target.value } })}
@@ -135,6 +137,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="tel"
                         label='Phone Number'
+                        value={user.phone}
                         error={formErrors && formErrors.phone ? true : false}
                         helperText={formErrors && formErrors.phone}
                         onChange={(e) => setUser({ ...user, phone: e.target.value })}
@@ -144,6 +147,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="email"
                         label='Email'
+                        value={user.email}
                         error={formErrors && formErrors.email ? true : false}
                         helperText={formErrors && formErrors.email}
                         onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -154,6 +158,7 @@ const Register = () => {
                     <div className='flex'>
                         <PasswordInput
                             label='Password'
+                            value={user.password}
                             error={formErrors && formErrors.password ? true : false}
                             helperText={formErrors && formErrors.password}
                             setter={setPassword}
@@ -173,6 +178,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='Street'
+                        value={user.address.street}
                         error={formErrors && formErrors.street ? true : false}
                         helperText={formErrors && formErrors.street}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, street: e.target.value } })}
@@ -182,6 +188,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="number"
                         label='House Number'
+                        value={user.address.houseNumber}
                         error={formErrors && formErrors.houseNumber ? true : false}
                         helperText={formErrors && formErrors.houseNumber}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, houseNumber: e.target.value } })}
@@ -193,6 +200,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='City'
+                        value={user.address.city}
                         error={formErrors && formErrors.city ? true : false}
                         helperText={formErrors && formErrors.city}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, city: e.target.value } })}
@@ -201,6 +209,7 @@ const Register = () => {
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
+                        value={user.address.state}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, state: e.target.value } })}
                         label='State'
                     />
@@ -210,6 +219,7 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="text"
                         label='country'
+                        value={user.address.country}
                         error={formErrors && formErrors.country ? true : false}
                         helperText={formErrors && formErrors.country}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, country: e.target.value } })}
@@ -219,22 +229,25 @@ const Register = () => {
                         id="outlined-error-helper-text"
                         type="number"
                         label='Zip'
+                        value={user.address.zip}
                         error={formErrors && formErrors.zip ? true : false}
                         helperText={formErrors && formErrors.zip}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, zip: e.target.value } })}
                         required
                     />
                 </div>
-                <div className='my-6'>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                onChange={(e) => setIsBusiness(e.target.checked)}
-                            />
-                        }
-                        label="Business Account"
-                    />
-                </div>
+                {!id &&
+                    <div className='my-6'>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    onChange={(e) => setIsBusiness(e.target.checked)}
+                                />
+                            }
+                            label="Business Account"
+                        />
+                    </div>
+                }
                 <div>
                     <Button style={{ width: '100%' }} onClick={handleSubmit} variant='contained'>Submit</Button>
                 </div>
