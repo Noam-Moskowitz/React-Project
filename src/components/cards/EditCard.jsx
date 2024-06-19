@@ -21,6 +21,7 @@ const EditCard = () => {
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
             METHOD.GET_ONE,
+
         )
 
         callApi(newRequest);

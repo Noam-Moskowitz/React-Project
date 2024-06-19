@@ -7,8 +7,11 @@ import { RequestObject } from '../../models/RequestObject';
 import CustomLoader from '../loaders/CustomLoader';
 import useThemeColor from '../../hooks/useThemeColor';
 import useValidation from '../../hooks/useValidation';
+import { useParams } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 const Register = () => {
+    const { id } = useParams();
     const [user, setUser] = useState({
         name: {
             first: '',
@@ -27,6 +30,7 @@ const Register = () => {
     });
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
+    const { token } = useToken()
 
     const [isBuisness, setIsBusiness] = useState(false);
 
@@ -70,11 +74,23 @@ const Register = () => {
 
         callApi(newRequest)
     }
+    useEffect(() => {
+        if (id) {
+            const newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`,
+                METHOD.GET_ONE,
+                null,
+                token
+            )
+
+            callApi(newRequest);
+        }
+    }, [])
 
 
     useEffect(() => {
         if (data) {
-
+            setUser(data)
         }
     }, [data])
 

@@ -79,7 +79,7 @@ const UserIcon = ({ id, token }) => {
                     <Paper className='p-2'>
                         <List>
                             <ListItem disablePadding>
-                                <ListItemButton>
+                                <ListItemButton onClick={() => navigate(`/edit/${id}`)}>
                                     <ListItemIcon>
                                         <PersonIcon />
                                     </ListItemIcon>

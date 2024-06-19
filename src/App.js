@@ -29,6 +29,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/edit/:id' element={<Register />} />
             <Route path='/cards/:type' element={<Home />} />
             <Route path='/cards/:type' element={<Home />} />
             <Route path='/business/:id' element={<BusinessPage />} />

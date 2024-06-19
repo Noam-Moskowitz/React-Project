@@ -26,7 +26,7 @@ const Card2 = ({ content }) => {
     const navigate = useNavigate();
 
     const [hovering, setHovering] = useState(false);
-
+    console.log(content);
     return (
         <div
             onMouseEnter={() => setHovering(true)}
@@ -34,13 +34,13 @@ const Card2 = ({ content }) => {
         >
             <Card>
                 <CardHeader
-                    style={{position:`relative`}}
+                    style={{ position: `relative` }}
                     title={content.title}
                     subheader={content.subtitle}
                     action={
                         hovering && (
                             <Button
-                                style={{position:'absolute' }}
+                                style={{ position: 'absolute' }}
                                 className='slide-in'
                                 color='primary'
                                 variant='contained'
@@ -119,7 +119,7 @@ const Card2 = ({ content }) => {
                         <div className='flex items-center gap-4'>
                             <FavoriteButton
                                 likesArr={content.likes}
-                                likesCount={content.likes.length}
+                                likesCount={content.likes.length + 1}
                                 id={content._id}
                                 userId={userInfo._id}
                             />
