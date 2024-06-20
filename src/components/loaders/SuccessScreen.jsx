@@ -15,7 +15,7 @@ const SuccessScreen = () => {
             } else {
                 navigate(`/`)
             }
-        }, 1000)
+        }, 1500)
 
     }, [])
 

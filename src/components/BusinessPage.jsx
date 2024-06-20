@@ -7,6 +7,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import RateMyBusiness from './RateMyBusiness';
 import CustomLoader from './loaders/CustomLoader';
 import useThemeColor from '../hooks/useThemeColor';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import LanguageIcon from '@mui/icons-material/Language';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import { Height } from '@mui/icons-material';
 
 const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
@@ -25,7 +29,6 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
-        overflowY: 'scroll',
     };
 
     const handleClose = () => {
@@ -63,7 +66,7 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
                     onClose={handleClose}
                     aria-labelledby="modal-title"
                     aria-describedby="modal-description"
-                    style={{ color: textColor }}
+                    style={{ color: textColor, overflowY: `scroll` }}
                 >
                     <Box sx={style}>
                         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -93,23 +96,33 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
                                     {content.description}
                                 </p>
                             </Typography>
+                            <Typography className='flex gap-2 border-y-2'>
+                                <div>
+                                    {`${content.address.street} ${content.address.houseNumber} ${content.address.city}, ${content.address.zip}`}
+                                </div>
+                                <div>{`${content.address.country}`}</div>
+                            </Typography>
                             <Typography >
                                 <RateMyBusiness />
                             </Typography>
                         </Box>
                         <Box display="flex" justifyContent="space-between" mt={2}>
-                            <Button variant="contained" color="primary" onClick={() => alert('Get Directions')}>
-                                Get Directions
-                            </Button>
-                            <Button variant="contained" color="secondary" onClick={() => alert('Call')}>
-                                Call
-                            </Button>
-                            <Button variant="contained" color="secondary" onClick={() => alert('Call')}>
-                                Call
-                            </Button>
-                            <Button variant="contained" color="secondary" onClick={() => alert('Call')}>
-                                Call
-                            </Button>
+
+                            <a href={`tel:${content.phone}`}>
+                                <Button variant="contained" startIcon={<PhoneInTalkIcon />} color="primary" >
+                                    Call us
+                                </Button>
+                            </a>
+                            <a href={content.web} target='_blank'>
+                                <Button variant="contained" startIcon={<LanguageIcon />} color="primary">
+                                    Visit Website
+                                </Button>
+                            </a>
+                            <a href={`mailto:${content.email}`}>
+                                <Button variant="contained" color="primary" startIcon={<AlternateEmailIcon />}>
+                                    Email Us
+                                </Button>
+                            </a>
                         </Box>
                     </Box>
                 </Modal>
