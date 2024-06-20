@@ -37,7 +37,6 @@ const useApi = () => {
                     break;
 
                 case METHOD.GET_MY_CARDS:
-                    console.log(headers);
 
                     response = await axios.get(URL, {
                         headers: {
@@ -62,7 +61,7 @@ const useApi = () => {
                     responseData = response.data
                     break;
 
-                case METHOD.UPDATE_CARD:
+                case METHOD.UPDATE:
 
                     response = await axios.put(URL, payload, {
                         headers: {
@@ -126,7 +125,6 @@ const useApi = () => {
 
 
     const callApi = (requestObj) => {
-        console.log(requestObj);
         const { rUrl, rMethod, rHeaders, rPayload } = requestObj;
 
         setURL(rUrl);
@@ -166,7 +164,7 @@ const useApi = () => {
         GET_ALL: `GET_ALL`,
         GET_ONE: `GET_ONE`,
         GET_MY_CARDS: `GET_MY_CARDS`,
-        UPDATE_CARD: `UPDATE_CARD`,
+        UPDATE: `UPDATE`,
         CREATE_CARD: `CREATE_CARD`,
         LIKE: `LIKE`,
         DELETE: `DELETE`

@@ -62,7 +62,7 @@ const Login = () => {
             localStorage.setItem(`token`, data)
             const decodedToken = decodeToken(data)
             dispatch(saveInfo(decodedToken));
-            navigate('/')
+            navigate('/success/Log in')
         }
     }, [data])
 

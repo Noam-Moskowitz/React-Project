@@ -1,13 +1,12 @@
 import { Alert, Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import PasswordInput from './PasswordInput'
-import { testEmail, testPassword } from '../../utils/utls';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import CustomLoader from '../loaders/CustomLoader';
 import useThemeColor from '../../hooks/useThemeColor';
 import useValidation from '../../hooks/useValidation';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useToken from '../../hooks/useToken';
 
 const Register = () => {
@@ -30,8 +29,9 @@ const Register = () => {
     });
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
-    const { token } = useToken()
-
+    const [isEdit, setIsEdit] = useState(id ? true : false)
+    const [onMount, setOnMount] = useState(false);
+    const [navigateTo, setNavigateTo] = useState();
     const [isBuisness, setIsBusiness] = useState(false);
 
 
@@ -39,43 +39,81 @@ const Register = () => {
     const { validate, ACTION_TYPES, formErrors } = useValidation();
 
     const { primaryColor, backgroundColor } = useThemeColor();
+    const { token } = useToken()
+    const navigate = useNavigate();
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        let userObj = {};
+        let formData = {};
+        let newRequest = {};
 
-        const userObj = {
-            ...user,
-            password: {
-                password: password, confirmPassword: confirmPassword
-            }
+        if (isEdit) {
+            userObj = {
+                ...user,
+            };
+        } else {
+            userObj = {
+                ...user,
+                password: {
+                    password: password, confirmPassword: confirmPassword
+                }
+            };
         }
 
-        console.log(userObj);
 
-        if (!validate({ type: ACTION_TYPES.REGISTER, payload: userObj })) return
+        if (!validate({ type: ACTION_TYPES.USER, payload: userObj })) return
 
+        if (isEdit) {
 
-        const formData = {
-            name: user.name,
-            phone: user.phone,
-            email: user.email,
-            password: password,
-            image: {},
-            address: user.address,
-            isBusiness: isBuisness
+            formData = {
+                name: user.name,
+                phone: user.phone,
+                email: user.email,
+                image: {},
+                address: user.address,
+            };
+
+            delete formData.name._id;
+            delete formData.address._id;
+            delete formData.email
+
+            newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${user._id}`,
+                METHOD.UPDATE,
+                formData,
+                token
+            )
+
+            setNavigateTo(`/success/Update`)
+
+        } else {
+            formData = {
+                name: user.name,
+                phone: user.phone,
+                email: user.email,
+                password: password,
+                image: {},
+                address: user.address,
+                isBusiness: isBuisness
+            };
+
+            newRequest = new RequestObject(
+                `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
+                METHOD.REGISTER,
+                formData
+            )
+            setNavigateTo(`/success/Registration`)
         }
-
-        const newRequest = new RequestObject(
-            `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,
-            METHOD.REGISTER,
-            formData
-        )
 
 
         callApi(newRequest)
     }
+
     useEffect(() => {
         if (id) {
+            setOnMount(true)
             const newRequest = new RequestObject(
                 `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`,
                 METHOD.GET_ONE,
@@ -91,6 +129,11 @@ const Register = () => {
     useEffect(() => {
         if (data) {
             setUser(data)
+            if (onMount) {
+                setOnMount(false);
+            } else {
+                navigate(navigateTo);
+            }
         }
     }, [data])
 
@@ -143,42 +186,45 @@ const Register = () => {
                         onChange={(e) => setUser({ ...user, phone: e.target.value })}
                         required
                     />
-                    <TextField
-                        id="outlined-error-helper-text"
-                        type="email"
-                        label='Email'
-                        value={user.email}
-                        error={formErrors && formErrors.email ? true : false}
-                        helperText={formErrors && formErrors.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        required
-                    />
-                </div>
-                <div className='flex flex-col md:flex-row  gap-6 my-6'>
-                    <div className='flex'>
-                        <PasswordInput
-                            label='Password'
-                            value={user.password}
-                            error={formErrors && formErrors.password ? true : false}
-                            helperText={formErrors && formErrors.password}
-                            setter={setPassword}
+                    {!isEdit &&
+                        <TextField
+                            id="outlined-error-helper-text"
+                            type="email"
+                            label='Email'
+                            value={user.email}
+                            error={formErrors && formErrors.email ? true : false}
+                            helperText={formErrors && formErrors.email}
+                            onChange={(e) => setUser({ ...user, email: e.target.value })}
+                            required
                         />
-                    </div>
-                    <div className='flex'>
-                        <PasswordInput
-                            label='Confirm Password'
-                            error={formErrors && formErrors.confirmPassword ? true : false}
-                            helperText={formErrors && formErrors.confirmPassword}
-                            setter={setconfirmPassword}
-                        />
-                    </div>
+                    }
                 </div>
+                {!isEdit &&
+                    <div className='flex flex-col md:flex-row  gap-6 my-6'>
+                        <div className='flex'>
+                            <PasswordInput
+                                label='Password'
+                                error={formErrors && formErrors.password ? true : false}
+                                helperText={formErrors && formErrors.password}
+                                setter={setPassword}
+                            />
+                        </div>
+                        <div className='flex'>
+                            <PasswordInput
+                                label='Confirm Password'
+                                error={formErrors && formErrors.confirmPassword ? true : false}
+                                helperText={formErrors && formErrors.confirmPassword}
+                                setter={setconfirmPassword}
+                            />
+                        </div>
+                    </div>
+                }
                 <div className='my-6 flex flex-col md:flex-row  gap-6'>
                     <TextField
                         id="outlined-error-helper-text"
                         type="text"
                         label='Street'
-                        value={user.address.street}
+                        value={user && user.address.street}
                         error={formErrors && formErrors.street ? true : false}
                         helperText={formErrors && formErrors.street}
                         onChange={(e) => setUser({ ...user, address: { ...user.address, street: e.target.value } })}
@@ -236,7 +282,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                {!id &&
+                {!isEdit &&
                     <div className='my-6'>
                         <FormControlLabel
                             control={

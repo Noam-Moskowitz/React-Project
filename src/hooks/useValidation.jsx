@@ -74,7 +74,7 @@ const useValidation = () => {
 
                 break;
 
-            case ACTION_TYPES.REGISTER:
+            case ACTION_TYPES.USER:
                 const {
                     name,
                     password
@@ -108,6 +108,8 @@ const useValidation = () => {
                     validationErrors[`email`] = `Please enter a valid email`
                 }
 
+                if (!password) break;
+
                 if (!testPassword(password.password)) {
                     validationErrors[`password`] = `Please enter a valid password`
                 }
@@ -139,7 +141,7 @@ const useValidation = () => {
 
     const ACTION_TYPES = {
         CARD: `CARD`,
-        REGISTER: `REGISTER`,
+        USER: `USER`,
         LOGIN: `LOGIN`
     }
 

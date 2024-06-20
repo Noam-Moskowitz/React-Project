@@ -83,7 +83,7 @@ const UserIcon = ({ id, token }) => {
                                     <ListItemIcon>
                                         <PersonIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Profile" />
+                                    <ListItemText primary="Edit Profile" />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>

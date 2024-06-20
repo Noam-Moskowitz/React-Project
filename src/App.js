@@ -8,6 +8,7 @@ import useAppTheme from './hooks/useAppTheme';
 import TopNav from './components/navbar/TopNav';
 import BusinessPage from './components/BusinessPage';
 import EditCard from './components/cards/EditCard';
+import SuccessScreen from './components/loaders/SuccessScreen';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='/business/:id' element={<BusinessPage />} />
             <Route path='/card/edit/:id' element={<EditCard />} />
             <Route path='/card/create' element={<EditCard />} />
+            <Route path='/success/:message' element={<SuccessScreen />} />
 
 
           </Routes>
