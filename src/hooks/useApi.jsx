@@ -31,7 +31,15 @@ const useApi = () => {
                     responseData = response.data
                     break;
                 case METHOD.GET_ALL:
-                    response = await axios.get(URL)
+                    if (headers) {
+                        response = await axios.get(URL, {
+                            headers: {
+                                'x-auth-token': headers
+                            }
+                        })
+                    } else {
+                        response = await axios.get(URL)
+                    }
 
                     responseData = response.data
                     break;

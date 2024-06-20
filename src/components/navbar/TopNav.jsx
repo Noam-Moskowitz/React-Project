@@ -129,7 +129,7 @@ const TopNav = () => {
                             setSelectedNav={setSelectedNav}
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='Sandbox'
-                            linkTo='/sandbox'
+                            linkTo='/admin/users'
                             setIsSearching={setIsSearching}
                         />
                     }
