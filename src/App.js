@@ -9,7 +9,7 @@ import TopNav from './components/navbar/TopNav';
 import BusinessPage from './components/BusinessPage';
 import EditCard from './components/cards/EditCard';
 import SuccessScreen from './components/loaders/SuccessScreen';
-import Sandbox from './components/Sandbox';
+import Sandbox from './components/users/Sandbox';
 
 
 function App() {
