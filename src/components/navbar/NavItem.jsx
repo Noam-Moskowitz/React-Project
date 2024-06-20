@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const NavItem = ({ selectedNav, setSelectedNav, themeColors, label, linkTo, fontSize }) => {
+const NavItem = ({ selectedNav, setSelectedNav, themeColors, label, linkTo, fontSize, setIsSearching }) => {
 
     const [localSelected, setLocalSelected] = useState(selectedNav);
+
+    const handleSelecting = (e) => {
+        setSelectedNav(e.target.textContent);
+        setIsSearching(false)
+    }
 
     useEffect(() => {
         setLocalSelected(selectedNav)
@@ -14,7 +19,7 @@ const NavItem = ({ selectedNav, setSelectedNav, themeColors, label, linkTo, font
         <div>
             <li
                 className={`text-white ${fontSize} border-b-4  hover:opacity-70`}
-                onClick={(e) => setSelectedNav(e.target.textContent)}
+                onClick={handleSelecting}
                 style={localSelected == `${label}` ?
                     { color: themeColors.contrastTextColor, borderBottomColor: themeColors.contrastTextColor } :
                     { color: themeColors.contrastTextColor, borderBottomColor: themeColors.primaryColor }}

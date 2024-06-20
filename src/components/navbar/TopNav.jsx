@@ -21,10 +21,11 @@ const TopNav = () => {
     const { primaryColor, contrastTextColor, backgroundColor, textColor } = useThemeColor();
     const { token, checkToken } = useToken();
 
-    const [authKeys, setAuthKeys] = useState()
-    const [selectedNav, setSelectedNav] = useState()
+    const [authKeys, setAuthKeys] = useState();
+    const [selectedNav, setSelectedNav] = useState();
     const [expanded, setExpanded] = useState(false);
     const [display, setDisplay] = useState();
+    const [isSearching, setIsSearching] = useState();
 
     useEffect(() => {
         setAuthKeys(userInfo)
@@ -62,6 +63,8 @@ const TopNav = () => {
                     <div>
                         <SearchBar
                             bgColor={contrastTextColor}
+                            setIsSearching={setIsSearching}
+                            isSearching={isSearching}
                         />
                     </div>
                     <div className='flex items-end '>
@@ -89,6 +92,7 @@ const TopNav = () => {
                         label='Bcard'
                         linkTo='/'
                         fontSize='text-3xl'
+                        setIsSearching={setIsSearching}
                     />
                     <NavItem
                         selectedNav={selectedNav}
@@ -96,6 +100,7 @@ const TopNav = () => {
                         themeColors={{ contrastTextColor, primaryColor }}
                         label='About'
                         linkTo='/about'
+                        setIsSearching={setIsSearching}
                     />
 
                     {authKeys && authKeys._id &&
@@ -105,6 +110,7 @@ const TopNav = () => {
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='My Favorites'
                             linkTo='cards/myFavorites'
+                            setIsSearching={setIsSearching}
                         />
                     }
                     {authKeys && authKeys.isBusiness &&
@@ -114,6 +120,7 @@ const TopNav = () => {
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='My Cards'
                             linkTo='cards/myCards'
+                            setIsSearching={setIsSearching}
                         />
                     }
                     {authKeys && authKeys.isAdmin &&
@@ -123,6 +130,7 @@ const TopNav = () => {
                             themeColors={{ contrastTextColor, primaryColor }}
                             label='Sandbox'
                             linkTo='/sandbox'
+                            setIsSearching={setIsSearching}
                         />
                     }
                 </div>
@@ -132,6 +140,8 @@ const TopNav = () => {
                         <div>
                             <SearchBar
                                 bgColor={contrastTextColor}
+                                setIsSearching={setIsSearching}
+                                isSearching={isSearching}
                             />
                         </div>
                         <div className='flex items-end'>
@@ -150,6 +160,7 @@ const TopNav = () => {
                                 themeColors={{ contrastTextColor, primaryColor }}
                                 label='LOG IN'
                                 linkTo='/login'
+                                setIsSearching={setIsSearching}
                             />
 
                             <NavItem
@@ -158,6 +169,7 @@ const TopNav = () => {
                                 themeColors={{ contrastTextColor, primaryColor }}
                                 label='REGISTER'
                                 linkTo='/register'
+                                setIsSearching={setIsSearching}
                             />
 
                         </div> :

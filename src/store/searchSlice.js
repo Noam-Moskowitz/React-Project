@@ -6,9 +6,12 @@ export const searchSlice = createSlice({
     reducers: {
         startSearch: (state, action) => {
             return action.payload
+        },
+        stopSearch: (state, action) => {
+            return null;
         }
     }
 })
 
-export const { startSearch } = searchSlice.actions;
+export const { startSearch, stopSearch } = searchSlice.actions;
 export default searchSlice.reducer;

@@ -1,12 +1,31 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { TextField } from '@mui/material';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { startSearch } from '../../store/searchSlice';
+import { startSearch, stopSearch } from '../../store/searchSlice';
 
-const SearchBar = ({ bgColor }) => {
+const SearchBar = ({ bgColor, isSearching, setIsSearching }) => {
 
     const dispatch = useDispatch()
+    const [searchValue, setSearchValue] = useState()
+
+    const handleChange = (e) => {
+        setIsSearching(true)
+        setSearchValue(e.target.value);
+    }
+
+    useEffect(() => {
+        if (!isSearching) {
+            setSearchValue(``)
+            dispatch(stopSearch());
+        }
+    }, [isSearching])
+
+    useEffect(() => {
+        if (searchValue) {
+            dispatch(dispatch(startSearch(searchValue)))
+        }
+    }, [searchValue])
 
 
     return (
@@ -14,8 +33,9 @@ const SearchBar = ({ bgColor }) => {
             <TextField
                 size='small'
                 placeholder='Search...'
+                value={searchValue}
                 style={{ backgroundColor: bgColor, borderRadius: `5px` }}
-                onChange={(e) => dispatch(startSearch(e.target.value))}
+                onChange={handleChange}
             />
             <div className='absolute right-0 t-0'>
                 <SearchIcon color='primary' />
