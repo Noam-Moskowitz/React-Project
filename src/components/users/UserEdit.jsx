@@ -21,9 +21,10 @@ const UserEdit = ({user, setOpenModal}) => {
 
 
     const cleanedObject={
-        ...newUser.name,
-        ...newUser.phone,
-        ...newUser.address,
+        name:{...newUser.name},
+        phone:newUser.phone,
+        address:{...newUser.address},
+        image:{...newUser.image}
     }
     console.log(cleanedObject);
 
