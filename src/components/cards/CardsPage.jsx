@@ -76,7 +76,7 @@ const CardsPage = () => {
     return (
         <div className={cards && cards.length < 6 ? `h-screen` : ``}>
             {userAuthKeys.isBusiness && type === `myCards` &&
-                <div div className='flex px-6 pt-6' >
+                <div  className='flex px-6 pt-6' >
                     <Button
                         variant='contained'
                         endIcon={<AddIcon />}
@@ -92,7 +92,7 @@ const CardsPage = () => {
             }
 
             <div
-                className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 p-6 md:p-10  gap-8'
+                className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6 md:p-10  gap-8'
             >
                 {cards && cards.map(card => (<Card2 key={card._id} content={card} />))}
             </div>
