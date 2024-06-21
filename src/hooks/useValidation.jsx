@@ -104,6 +104,8 @@ const useValidation = () => {
                     validationErrors[`phone`] = `Phone Number must be between 9-11 characters`
                 }
 
+                if (!payload.email) break;
+
                 if (!testEmail(payload.email)) {
                     validationErrors[`email`] = `Please enter a valid email`
                 }

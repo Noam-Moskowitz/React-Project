@@ -7,6 +7,7 @@ import CustomLoader from '../loaders/CustomLoader'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector } from 'react-redux';
+import UserModal from './UserModal';
 
 const Sandbox = () => {
 
@@ -17,6 +18,8 @@ const Sandbox = () => {
     const [users, setUsers] = useState();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [openModal, setOpenModal]=useState(false);
+    const [selectedUser, setSelectedUser]=useState();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -62,9 +65,9 @@ const Sandbox = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div>
+        <div className='p-5'>
             <Paper>
-                <TableContainer sx={{ maxHeight: `100vh` }}>
+                <TableContainer sx={{ maxHeight: `90vh` }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -106,11 +109,25 @@ const Sandbox = () => {
                                             <div className='flex gap-1'>
                                                 <div
                                                     className='hover:cursor-pointer p-1 rounded hover:bg-blue-100'
+                                                    onClick={()=>{
+                                                        setOpenModal(true)
+                                                        setSelectedUser({
+                                                            action:`edit`,
+                                                            user:u
+                                                        })
+                                                    }}
                                                 >
                                                     <EditIcon color='primary' />
                                                 </div>
                                                 <div
                                                     className='hover:cursor-pointer p-1 rounded hover:bg-red-200'
+                                                    onClick={()=>{
+                                                        setOpenModal(true)
+                                                        setSelectedUser({
+                                                            action:`delete`,
+                                                            user:u
+                                                        });
+                                                    }}
                                                 >
                                                     <DeleteIcon color='error' />
                                                 </div>
@@ -131,6 +148,7 @@ const Sandbox = () => {
                     />
                 </TableContainer>
             </Paper>
+            <UserModal openModal={openModal} setOpenModal={setOpenModal} selectedUser={selectedUser} />
         </div>
     )
 }

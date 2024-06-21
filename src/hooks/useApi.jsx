@@ -102,7 +102,8 @@ const useApi = () => {
                     break;
 
                 case METHOD.DELETE:
-                    response = await axios.delete(URL, {
+                    if (payload) {
+                        response = await axios.delete(URL, {
                         headers: {
                             'x-auth-token': headers
                         },
@@ -110,6 +111,14 @@ const useApi = () => {
                             bizNumber: payload
                         }
                     })
+                    }else{
+                        response = await axios.delete(URL, {
+                        headers: {
+                            'x-auth-token': headers
+                        }
+                    })
+                    };
+                    
 
                     responseData = response.data
                     break;
