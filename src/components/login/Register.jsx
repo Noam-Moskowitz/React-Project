@@ -38,7 +38,7 @@ const Register = () => {
     });
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
-    const [isEdit] = useState(id ? true : false)
+    const [isEdit, setIsEdit] = useState(id ? true : false)
     const [onMount, setOnMount] = useState(false);
     const [navigateTo, setNavigateTo] = useState();
     const [isBuisness, setIsBusiness] = useState(false);

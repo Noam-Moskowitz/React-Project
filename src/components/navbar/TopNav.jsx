@@ -77,7 +77,7 @@ const TopNav = () => {
                     </div>
                     <div>
                         {authKeys && authKeys._id &&
-                            <UserIcon />
+                            <UserIcon id={authKeys && authKeys._id} token={token} />
                         }
                     </div>
                 </div>

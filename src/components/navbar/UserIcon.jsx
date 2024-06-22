@@ -34,6 +34,7 @@ const UserIcon = ({ id, token }) => {
                 iat: null
             }
         ));
+        localStorage.removeItem(`token`)
 
         navigate(`/success/Log Out`)
     }

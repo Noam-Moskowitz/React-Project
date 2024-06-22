@@ -22,12 +22,13 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: `auto`,
         bgcolor: 'background.paper',
+        width:`auto`,
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
         maxHeight:`80vh`,
+        maxWidth:`500px`,
         overflowY:`scroll`
     };
 
@@ -57,7 +58,7 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
 
     return (
-        <div>
+        <div className='w-[50vw] md:w-[300px]'>
             {content &&
                 <Modal
                     open={open}
