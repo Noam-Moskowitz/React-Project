@@ -32,7 +32,7 @@ const UserIcon = ({ id, token }) => {
             }
         ));
 
-        navigate(`/`)
+        navigate(`/success/Log Out`)
     }
 
     useEffect(() => {

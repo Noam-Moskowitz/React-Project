@@ -3,9 +3,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal, Box, Button, Typography, Tooltip, Alert } from '@mui/material';
 import { RequestObject } from '../../../models/RequestObject';
 import useApi from '../../../hooks/useApi';
+import Notify from '../../Notify';
+import useThemeColor from '../../../hooks/useThemeColor';
 
 const DeleteButton = ({ bizNumber, id }) => {
     const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
+    const {textColor}=useThemeColor()
 
     const [open, setOpen] = useState(false);
 
@@ -52,10 +55,11 @@ const DeleteButton = ({ bizNumber, id }) => {
                         boxShadow: 24,
                         p: 4,
                         borderRadius: 2,
+                        color: textColor
                     }}
                 >
                     <Typography id="delete-confirmation-modal" variant="h6" component="h2">
-                        Confirm Deletion
+                        Confirm Delete
                     </Typography>
                     <Typography id="confirm-or-cancel-deletion" sx={{ mt: 2 }}>
                         Are you sure you want to delete this item?
@@ -70,15 +74,11 @@ const DeleteButton = ({ bizNumber, id }) => {
                     </Box>
                 </Box>
             </Modal>
-            {
-                errorFlag && <div className='flex items-center justify-center top-12 left-0  fixed'>
-                    <Alert className='animate-bounce' severity='error'>{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
-                </div>
+            {errorFlag &&
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`} />
             }
-            {
-                successFlag && <div className='flex items-center justify-center top-12 left-0  fixed '>
-                    <Alert className='animate-bounce' severity='success'>{`Card succesfully deleted!`}</Alert>
-                </div>
+            {successFlag && 
+                <Notify severity='success' message='Card Deleted' />
             }
         </div>
     )

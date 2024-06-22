@@ -8,18 +8,29 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector } from 'react-redux';
 import UserModal from './UserModal';
+import useThemeColor from '../../hooks/useThemeColor';
 
 const Sandbox = () => {
 
     const { data, callApi, METHOD, isLoading } = useApi()
     const { token } = useToken()
     const searchValue = useSelector(store => store.search);
+    const {backgroundColor}=useThemeColor()
 
     const [users, setUsers] = useState();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal]=useState(false);
     const [selectedUser, setSelectedUser]=useState();
+
+    const updateTableDelete = (deletedUser)=>{
+        const filteredArr=users.filter(user=> user._id!==deletedUser._id)
+        setUsers(filteredArr)
+    }
+    const updateTableEdit = (editedUser)=>{
+        const filteredArr=users.map(user=> user._id===editedUser._id ? editedUser : user);
+        setUsers(filteredArr)
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -65,7 +76,7 @@ const Sandbox = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div className='p-5'>
+        <div className='p-5 h-screen' style={{backgroundColor:backgroundColor}}>
             <Paper>
                 <TableContainer sx={{ maxHeight: `90vh` }}>
                     <Table stickyHeader aria-label="sticky table">
@@ -148,7 +159,13 @@ const Sandbox = () => {
                     />
                 </TableContainer>
             </Paper>
-            <UserModal openModal={openModal} setOpenModal={setOpenModal} selectedUser={selectedUser} />
+            <UserModal 
+                openModal={openModal} 
+                setOpenModal={setOpenModal} 
+                selectedUser={selectedUser} 
+                updateTableDelete={updateTableDelete}
+                updateTableEdit={updateTableEdit}
+                />
         </div>
     )
 }

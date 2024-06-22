@@ -87,14 +87,17 @@ const useValidation = () => {
                     ...payload.address
                 };
 
-                console.log(newObject);
+                if (!newObject.houseNumber) {
+                    validationErrors[`houseNumber`]= `House Number must be defined!`
+                }
 
                 delete newObject.state
+                delete newObject.houseNumber
+
 
                 for (const key in newObject) {
 
                     const value = newObject[key];
-                    console.log(key);
                     if (value.length < 2 || value.length > 256) {
                         validationErrors[key] = `${key} must be between 2-256 characters`;
                     }
@@ -135,7 +138,6 @@ const useValidation = () => {
         }
 
         if (Object.keys(validationErrors).length == 0) return true
-
         setFormErrors(validationErrors)
     }
 

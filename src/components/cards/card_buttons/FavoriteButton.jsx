@@ -5,6 +5,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Alert, Badge, Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
+import Notify from '../../Notify';
 
 const FavoriteButton = ({ likesArr, likesCount, id, userId }) => {
     const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi();
@@ -64,11 +65,11 @@ const FavoriteButton = ({ likesArr, likesCount, id, userId }) => {
             </Tooltip>
             {
                 successFlag &&
-                <div className='flex items-center justify-center w-screen  fixed top-12 left-0  '>
+                <div>
                     {isLiked ?
-                        <Alert className='animate-bounce' severity='success'>Succesfully added card to favorites!</Alert>
+                        <Notify severity='success' message='Card added to favorites!' />
                         :
-                        <Alert className='animate-bounce' severity='success'>Succesfully removed card from favorites!</Alert>
+                        <Notify severity='success' message='Card removed from favorites!' />
                     }
                 </div>
             }

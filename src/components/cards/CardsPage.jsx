@@ -10,10 +10,11 @@ import { useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import Card2 from './Card2';
 import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import Notify from '../Notify';
 
 
 const CardsPage = () => {
-    const { data, callApi, isLoading, apiErrors, METHOD } = useApi();
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
     const userAuthKeys = useSelector(store => store.userInfo);
     const searchValue = useSelector(store => store.search);
     const { token, checkToken } = useToken();
@@ -72,9 +73,15 @@ const CardsPage = () => {
     }, [data])
 
     if (isLoading) return <SkeletonLoader />
+    if (cards && cards.length==0) return (
+        <h1 
+            style={{color:primaryColor}}
+            className='h-screen text-center uppercase font-bold pt-20 text-3xl'
+            >No cards were found!</h1>
+    )
 
     return (
-        <div className={cards && cards.length < 6 ? `h-screen` : ``}>
+        <div className={cards && cards.length < 6 ? `md:h-screen` : ``}>
             {userAuthKeys.isBusiness && type === `myCards` &&
                 <div  className='flex px-6 pt-6' >
                     <Button
@@ -96,6 +103,9 @@ const CardsPage = () => {
             >
                 {cards && cards.map(card => (<Card2 key={card._id} content={card} />))}
             </div>
+            {errorFlag&&
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`}  />
+            }
         </div>
     )
 }

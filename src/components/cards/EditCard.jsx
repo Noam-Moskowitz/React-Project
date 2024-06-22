@@ -1,17 +1,19 @@
 import { Alert, Button, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import useThemeColor from '../../hooks/useThemeColor';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import CustomLoader from '../loaders/CustomLoader';
 import useValidation from '../../hooks/useValidation';
+import Notify from '../Notify';
 
 const EditCard = () => {
     const { id } = useParams();
     const { primaryColor, backgroundColor } = useThemeColor();
-    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD, method } = useApi();
+    const { data, callApi, isLoading, apiErrors, errorFlag,  METHOD, method } = useApi();
     const { validate, ACTION_TYPES, formErrors } = useValidation();
+    const navigate = useNavigate()
 
     const [content, setContent] = useState()
     const [isCreate] = useState(!id ? true : false)
@@ -30,6 +32,10 @@ const EditCard = () => {
     useEffect(() => {
         if (data) {
             setContent(data)
+            if (method===METHOD.GET_ONE) return
+            if (method===METHOD.UPDATE) navigate(`/success/Card Update`);
+            if (method===METHOD.CREATE_CARD) navigate(`/success/Card Creation`)
+
         }
     }, [data])
 
@@ -65,7 +71,7 @@ const EditCard = () => {
         } else {
             newRequest = new RequestObject(
                 `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${content._id}`,
-                METHOD.UPDATE_CARD,
+                METHOD.UPDATE,
                 cleanedObject,
                 token
             )
@@ -79,13 +85,14 @@ const EditCard = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div className='flex justify-center py-20'>
+        <div className='flex justify-center md:py-20 p-5' style={{backgroundColor:backgroundColor}}>
             <form
-                className='border-4 px-20 rounded w-[50vw]  py-10 flex-col'
+                className='border-4 px-20 rounded md:w-[50vw]  py-10 flex-col'
                 style={{ backgroundColor: backgroundColor, borderColor: primaryColor }}
             >
                 <h1
                     className='font-bold text-center text-3xl pb-6 underline'
+                    style={{color:primaryColor}}
                 >{isCreate ? `Create Card` : `Edit Card`}</h1>
                 <div className='flex flex-col   my-6 justify-center gap-6'>
                     <TextField
@@ -120,7 +127,7 @@ const EditCard = () => {
                         onChange={(e) => setContent({ ...content, description: e.target.value })}
                         required
                     />
-                    <div className='flex justify-around'>
+                    <div className='flex flex-col md:flex-row gap-4 justify-around'>
                         <TextField
                             id="outlined-error-helper-text"
                             type="tel"
@@ -173,7 +180,7 @@ const EditCard = () => {
                         required
                     />
 
-                    <div className='flex justify-around'>
+                    <div className='flex flex-col md:flex-row gap-4 justify-around'>
                         <TextField
                             id="outlined-error-helper-text"
                             type="text"
@@ -199,7 +206,7 @@ const EditCard = () => {
                             )}
                         />
                     </div>
-                    <div className='flex justify-around'>
+                    <div className='flex flex-col md:flex-row gap-4 justify-around'>
                         <TextField
                             id="outlined-error-helper-text"
                             type="text"
@@ -222,7 +229,7 @@ const EditCard = () => {
                             )}
                         />
                     </div>
-                    <div className='flex justify-around'>
+                    <div className='flex flex-col md:flex-row gap-4 justify-around'>
                         <TextField
                             id="outlined-error-helper-text"
                             type="text"
@@ -243,7 +250,7 @@ const EditCard = () => {
                             helperText={formErrors && formErrors.zip}
                             value={content && content.address && content.address.state}
                             onChange={(e) => setContent(
-                                { ...content, state: { ...content.address, street: e.target.value } }
+                                { ...content, address: { ...content.address, state: e.target.value } }
                             )}
                         />
                     </div>
@@ -255,28 +262,8 @@ const EditCard = () => {
 
 
             {errorFlag &&
-                <div className='flex justify-center fixed top-12'>
-                    <Alert
-                        className='animate-bounce'
-                        severity='error'
-                    >{`${apiErrors.response.status}: ${apiErrors.response.data}`}</Alert>
-                </div>
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`} />
             }
-            {successFlag && method !== METHOD.GET_ONE &&
-                <div className='flex justify-center  w-screen fixed top-12 '>
-                    {isCreate ?
-                        <Alert
-                            className='animate-bounce'
-                            severity='success'
-                        >Card created Succesfully!</Alert>
-                        :
-                        <Alert
-                            className='animate-bounce'
-                            severity='success'
-                        >Card updated succesfully!</Alert>}
-                </div>
-            }
-
         </div >
     )
 }

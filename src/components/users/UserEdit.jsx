@@ -4,18 +4,22 @@ import useToken from '../../hooks/useToken';
 import { RequestObject } from '../../models/RequestObject';
 import { Button, TextField } from '@mui/material';
 import useValidation from '../../hooks/useValidation';
+import useThemeColor from '../../hooks/useThemeColor';
+import Notify from '../Notify';
 
-const UserEdit = ({user, setOpenModal}) => {
+const UserEdit = ({user, setOpenModal, updateTableEdit}) => {
 
 
-    const {data, callApi, METHOD}=useApi();
+    const {data, callApi, METHOD, errorFlag, apiErrors}=useApi();
     const {token}=useToken();
     const {validate, formErrors, ACTION_TYPES}=useValidation()
+    const {primaryColor}=useThemeColor()
 
     const [newUser,setNewUser]=useState(user);
-    const [title,setTitle]=useState(`Edit User`)
 
     const handleSubmit=()=>{
+
+        delete newUser.password;
 
         if (!validate({type:ACTION_TYPES.USER, payload:newUser})) return
 
@@ -26,7 +30,6 @@ const UserEdit = ({user, setOpenModal}) => {
         address:{...newUser.address},
         image:{...newUser.image}
     }
-    console.log(cleanedObject);
 
     delete cleanedObject.name._id
     delete cleanedObject.address._id
@@ -47,20 +50,26 @@ const UserEdit = ({user, setOpenModal}) => {
     useEffect(()=>{
         if (data) {
             setNewUser(data)
-            setTitle(`Update Succesful`)
+            updateTableEdit(data)
+            setOpenModal(false)
         }
     },[data])
 
     
     return (
         <div className='flex flex-col gap-4 p-10'>
-            <h1>{title}</h1>
-            <div className='flex flex-col md:flex-row'>
+            <h1 
+                className='text-3xl uppercase text-center font-bold pb-4'
+                style={{color:primaryColor}}
+                >Edit User</h1>
+            <div className='flex flex-col md:flex-row gap-2 '>
                 <TextField
                     id="outlined-error-helper-text"
                     type='text'
                     label='First Name'
                     required
+                    error={formErrors&&formErrors.firstName?true:false}
+                    helperText={formErrors&&formErrors.firstName}
                     value={newUser.name.first}
                     onChange={(e)=>setNewUser({...user, name:{ ...newUser.name, first:e.target.value}})}
                 />
@@ -72,12 +81,14 @@ const UserEdit = ({user, setOpenModal}) => {
                     onChange={(e)=>setNewUser({...user, name:{ ...newUser.name, middle:e.target.value}})}
                 />
             </div>
-            <div className='flex flex-col md:flex-row'>
+            <div className='flex flex-col md:flex-row gap-2'>
                 <TextField
                     id="outlined-error-helper-text"
                     type='text'
                     label='Last Name'
                     required
+                    error={formErrors&&formErrors.lastName?true:false}
+                    helperText={formErrors&&formErrors.lastName}
                     value={newUser.name.last}
                     onChange={(e)=>setNewUser({...user, name:{ ...newUser.name, last:e.target.value}})}
                 />
@@ -86,16 +97,20 @@ const UserEdit = ({user, setOpenModal}) => {
                     type='tel'
                     label='Phone Number'
                     required
+                    error={formErrors&&formErrors.phone?true:false}
+                    helperText={formErrors&&formErrors.phone}
                     value={newUser.phone}
                     onChange={(e)=>setNewUser({...user, phone:e.target.value})}
                 />
             </div>
-            <div className='flex flex-col md:flex-row'>
+            <div className='flex flex-col md:flex-row gap-2'>
                 <TextField
                     id="outlined-error-helper-text"
                     type='text'
                     label='Street'
                     required
+                    error={formErrors&&formErrors.street?true:false}
+                    helperText={formErrors&&formErrors.street}
                     value={newUser.address.street}
                     onChange={(e)=>setNewUser({...user, address:{ ...newUser.address, street:e.target.value}})}
                 />
@@ -104,16 +119,20 @@ const UserEdit = ({user, setOpenModal}) => {
                     type='number'
                     label='House Number'
                     required
+                    error={formErrors&&formErrors.houseNumber?true:false}
+                    helperText={formErrors&&formErrors.houseNumber}
                     value={newUser.address.houseNumber}
                     onChange={(e)=>setNewUser({...user, address:{ ...newUser.address, houseNumber:e.target.value}})}
                 />
             </div>
-            <div className='flex flex-col md:flex-row'>
+            <div className='flex flex-col md:flex-row gap-2'>
                 <TextField
                     id="outlined-error-helper-text"
                     type='text'
                     label='City'
                     required
+                    error={formErrors&&formErrors.city?true:false}
+                    helperText={formErrors&&formErrors.city}
                     value={newUser.address.city}
                     onChange={(e)=>setNewUser({...user, address:{ ...newUser.address, city:e.target.value}})}
                 />
@@ -122,11 +141,13 @@ const UserEdit = ({user, setOpenModal}) => {
                     type='number'
                     label='Zip'
                     required
+                    error={formErrors&&formErrors.zip?true:false}
+                    helperText={formErrors&&formErrors.zip}
                     value={newUser.address.zip}
                     onChange={(e)=>setNewUser({...user, address:{ ...newUser.address, zip:e.target.value}})}
                 />
             </div>
-            <div className='flex flex-col md:flex-row'>
+            <div className='flex flex-col md:flex-row gap-2'>
                 <TextField
                     id="outlined-error-helper-text"
                     type='text'
@@ -139,11 +160,13 @@ const UserEdit = ({user, setOpenModal}) => {
                     type='text'
                     label='Country'
                     required
+                    error={formErrors&&formErrors.country?true:false}
+                    helperText={formErrors&&formErrors.country}
                     value={newUser.address.country}
                     onChange={(e)=>setNewUser({...user, address:{ ...newUser.address, country:e.target.value}})}
                 />
             </div>
-            <div className='flex justify-around'>
+            <div className='flex justify-end gap-4'>
                 <Button
                     variant='contained'
                     onClick={()=> setOpenModal(false)}
@@ -154,6 +177,9 @@ const UserEdit = ({user, setOpenModal}) => {
                     onClick={handleSubmit}
                 >Update</Button>
             </div>
+                {errorFlag &&
+                    <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`} />
+            }
         </div>
     )
 }
