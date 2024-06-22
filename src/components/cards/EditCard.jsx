@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import useThemeColor from '../../hooks/useThemeColor';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,21 +9,23 @@ import useValidation from '../../hooks/useValidation';
 import Notify from '../Notify';
 
 const EditCard = () => {
+    //hooks
     const { id } = useParams();
     const { primaryColor, backgroundColor } = useThemeColor();
     const { data, callApi, isLoading, apiErrors, errorFlag,  METHOD, method } = useApi();
     const { validate, ACTION_TYPES, formErrors } = useValidation();
     const navigate = useNavigate()
 
+    //states
     const [content, setContent] = useState()
     const [isCreate] = useState(!id ? true : false)
 
+    //useEffects
     useEffect(() => {
         if (isCreate) return
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${id}`,
             METHOD.GET_ONE,
-
         )
 
         callApi(newRequest);
@@ -39,6 +41,8 @@ const EditCard = () => {
         }
     }, [data])
 
+
+    //functions
     const cleanObject = (obj) => {
         const keysToRemove = ["bizNumber", "createdAt", "image._id", "likes", "user_id", "__v", "_id"];
 
@@ -78,7 +82,6 @@ const EditCard = () => {
         }
 
         callApi(newRequest);
-
     }
 
 

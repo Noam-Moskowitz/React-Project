@@ -9,14 +9,17 @@ import { saveInfo } from '../../store/userInfoSlice.js'
 import { useNavigate } from 'react-router-dom';
 
 const UserIcon = ({ id, token }) => {
+    //hooks
     const { data, callApi, METHOD } = useApi();
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
+    //states
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
     const [initials, setInitials] = useState();
 
+    //functions
     const handleClick = (e) => {
         setOpen(!open)
         setAnchorEl(e.currentTarget)
@@ -35,6 +38,7 @@ const UserIcon = ({ id, token }) => {
         navigate(`/success/Log Out`)
     }
 
+    //useEffects
     useEffect(() => {
 
         const newRequest = new RequestObject(

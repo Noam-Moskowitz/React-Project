@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import { testEmail, testPassword } from '../../utils/utls';
 import useApi from '../../hooks/useApi';
 import { RequestObject } from '../../models/RequestObject';
 import PasswordInput from './PasswordInput';
-import { jwtDecode } from 'jwt-decode';
 import { saveInfo } from '../../store/userInfoSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -16,26 +14,21 @@ import useValidation from '../../hooks/useValidation';
 import useToken from '../../hooks/useToken';
 
 
-
-
-
 const Login = () => {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
+    //hooks
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi()
     const { validate, ACTION_TYPES, formErrors } = useValidation()
     const { decodeToken, token } = useToken()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
     const { primaryColor, backgroundColor, } = useThemeColor();
 
+    //states
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
-
-
-
+    //functions
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -53,10 +46,9 @@ const Login = () => {
         );
 
         callApi(newRequest)
-
     }
 
-
+    //useEffects
     useEffect(() => {
         if (data) {
             localStorage.setItem(`token`, data)

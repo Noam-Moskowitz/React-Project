@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Box, Button } from '@mui/material';
+import React from 'react';
+import { Modal, Box } from '@mui/material';
 import UserDelete from './UserDelete';
 import UserEdit from './UserEdit';
 
 const UserModal = ({openModal, setOpenModal, selectedUser, updateTableDelete, updateTableEdit}) => {
 
-    
-
-
-
-
-    const handleOpen = () => setOpenModal(true);
     const handleClose = () => setOpenModal(false);
 
     return (

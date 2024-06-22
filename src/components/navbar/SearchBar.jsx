@@ -7,6 +7,7 @@ import { startSearch, stopSearch } from '../../store/searchSlice';
 const SearchBar = ({ bgColor, isSearching, setIsSearching }) => {
 
     const dispatch = useDispatch()
+    
     const [searchValue, setSearchValue] = useState()
 
     const handleChange = (e) => {
@@ -24,6 +25,8 @@ const SearchBar = ({ bgColor, isSearching, setIsSearching }) => {
     useEffect(() => {
         if (searchValue) {
             dispatch(dispatch(startSearch(searchValue)))
+        }else{
+            setIsSearching(false)
         }
     }, [searchValue])
 

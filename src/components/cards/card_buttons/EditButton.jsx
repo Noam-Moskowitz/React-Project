@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 const EditButton = ({ id }) => {
+    //hooks
     const navigate = useNavigate()
 
     return (

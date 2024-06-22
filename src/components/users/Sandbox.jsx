@@ -11,18 +11,22 @@ import UserModal from './UserModal';
 import useThemeColor from '../../hooks/useThemeColor';
 
 const Sandbox = () => {
+    //global state
+    const searchValue = useSelector(store => store.search);
 
+    //jooks
     const { data, callApi, METHOD, isLoading } = useApi()
     const { token } = useToken()
-    const searchValue = useSelector(store => store.search);
     const {backgroundColor}=useThemeColor()
 
+    //states
     const [users, setUsers] = useState();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal]=useState(false);
     const [selectedUser, setSelectedUser]=useState();
 
+    //functions
     const updateTableDelete = (deletedUser)=>{
         const filteredArr=users.filter(user=> user._id!==deletedUser._id)
         setUsers(filteredArr)
@@ -41,6 +45,7 @@ const Sandbox = () => {
         setPage(0);
     };
 
+    //useEffects
     useEffect(() => {
         const newRequest = new RequestObject(
             `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users`,

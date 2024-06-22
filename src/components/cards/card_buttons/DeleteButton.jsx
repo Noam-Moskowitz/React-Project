@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Modal, Box, Button, Typography, Tooltip, Alert } from '@mui/material';
+import { Modal, Box, Button, Typography, Tooltip, } from '@mui/material';
 import { RequestObject } from '../../../models/RequestObject';
 import useApi from '../../../hooks/useApi';
 import Notify from '../../Notify';
 import useThemeColor from '../../../hooks/useThemeColor';
 
 const DeleteButton = ({ bizNumber, id }) => {
-    const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
+    //hooks
+    const {  callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
     const {textColor}=useThemeColor()
 
+    //states
     const [open, setOpen] = useState(false);
 
+    //functions
     const handleDelete = () => {
         const token = localStorage.getItem(`token`);
 

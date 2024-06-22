@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useApi from '../../hooks/useApi'
 import { RequestObject } from '../../models/RequestObject';
-import Card from './Card';
 import SkeletonLoader from '../loaders/SkeletonLoader';
 import useThemeColor from '../../hooks/useThemeColor';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,25 +8,26 @@ import useToken from '../../hooks/useToken';
 import { useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import Card2 from './Card2';
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button} from '@mui/material';
 import Notify from '../Notify';
 
 
 const CardsPage = () => {
+    //hooks
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
     const userAuthKeys = useSelector(store => store.userInfo);
     const searchValue = useSelector(store => store.search);
-    const { token, checkToken } = useToken();
-    const { primaryColor, backgroundColor } = useThemeColor()
+    const { token } = useToken();
+    const { primaryColor } = useThemeColor()
     const { type } = useParams();
     const navigate = useNavigate();
 
-
+    //states
     const [cards, setCards] = useState()
 
+    //useEffects
     useEffect(() => {
         if (searchValue) {
-            console.log(searchValue);
             const filteredCards = cards.filter(card =>
                 Object.values(card).some(value =>
                     String(value).toLowerCase().includes(searchValue.toLowerCase())
@@ -93,7 +93,7 @@ const CardsPage = () => {
             }
 
             {searchValue &&
-                <div className='flex justify-center pt-2 w-full text-lg'>
+                <div className='flex justify-center pt-2 w-full text-lg' style={{color:primaryColor}}>
                     {cards.length} Results Found!
                 </div>
             }

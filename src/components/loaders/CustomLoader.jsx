@@ -2,7 +2,7 @@ import React from 'react'
 import useThemeColor from '../../hooks/useThemeColor'
 
 const CustomLoader = () => {
-    const { primaryColor, backgroundColor, contrastTextColor } = useThemeColor()
+    const { primaryColor, backgroundColor } = useThemeColor()
     return (
         <div
             className='w-screen h-screen flex flex-col items-center justify-center'

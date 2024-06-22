@@ -12,19 +12,23 @@ import UserIcon from './UserIcon';
 
 const TopNav = () => {
 
+    //global states
     const userInfo = useSelector((state) => state.userInfo)
     const theme = useSelector((state) => state.theme)
 
+    //hooks
     const dispatch = useDispatch()
     const { primaryColor, contrastTextColor, backgroundColor, textColor } = useThemeColor();
     const { token, checkToken } = useToken();
 
+    //states
     const [authKeys, setAuthKeys] = useState();
     const [selectedNav, setSelectedNav] = useState();
     const [expanded, setExpanded] = useState(false);
     const [display, setDisplay] = useState();
     const [isSearching, setIsSearching] = useState();
 
+    //useEffects
     useEffect(() => {
         setAuthKeys(userInfo)
     }, [userInfo])
@@ -42,7 +46,6 @@ const TopNav = () => {
     }, [])
 
 
-
     return (
         <nav
             className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold ${expanded?`nav-dropDown`:``}`}
@@ -50,9 +53,9 @@ const TopNav = () => {
         >
 
             {/* mobile only */}
-            <div className='flex md:hidden justify-between w-full'>
+            <div className='flex md:hidden justify-between w-full z-50'>
                 <div
-                    className='border-2 rounded p-1 '
+                    className='border-2 rounded p-1 mr-2'
                     onClick={() => setExpanded(!expanded)}
                 >
                     <MenuIcon />
@@ -79,7 +82,6 @@ const TopNav = () => {
                     </div>
                 </div>
             </div>
-
 
             <ul className={`flex flex-col ${display} dropDown  md:flex md:flex-row w-full justify-between `}>
                 <div className='flex flex-col md:flex-row gap-4 md:items-end'>

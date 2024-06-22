@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import useApi from '../hooks/useApi';
 import { RequestObject } from '../models/RequestObject';
 import { Modal, Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import RateMyBusiness from './RateMyBusiness';
-import CustomLoader from './loaders/CustomLoader';
 import useThemeColor from '../hooks/useThemeColor';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import LanguageIcon from '@mui/icons-material/Language';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import { Height } from '@mui/icons-material';
+import Notify from '../components/Notify'
 
 const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
-    const { data, callApi, isLoading, apiErrors, errorFlag, successFlag, METHOD } = useApi();
+    const { data, callApi,  apiErrors, errorFlag, METHOD } = useApi();
     const { textColor } = useThemeColor()
 
     const [content, setContent] = useState();
@@ -29,6 +27,8 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+        maxHeight:`80vh`,
+        overflowY:`scroll`
     };
 
     const handleClose = () => {
@@ -45,9 +45,7 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
             callApi(newRequest);
         }
-
     }, [open])
-
 
 
     useEffect(() => {
@@ -126,6 +124,9 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
                         </Box>
                     </Box>
                 </Modal>
+            }
+            {errorFlag &&
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`}/>
             }
         </div>
     )

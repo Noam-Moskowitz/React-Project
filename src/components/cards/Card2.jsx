@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useState } from 'react'
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import useApi from '../../hooks/useApi';
-import { RequestObject } from '../../models/RequestObject';
 import { useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LanguageIcon from '@mui/icons-material/Language';
-
-import useThemeColor from '../../hooks/useThemeColor';
-import { useNavigate } from 'react-router-dom';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-
 import FavoriteButton from './card_buttons/FavoriteButton';
 import EditButton from './card_buttons/EditButton';
 import DeleteButton from './card_buttons/DeleteButton';
@@ -20,14 +12,13 @@ import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typograp
 import BusinessPage from '../BusinessPage';
 
 const Card2 = ({ content }) => {
-
-    const { data, callApi, apiErrors, successFlag, errorFlag, METHOD } = useApi()
+    //store
     const userInfo = useSelector((state) => state.userInfo)
-    const { primaryColor, backgroundColor, textColor } = useThemeColor()
-    const navigate = useNavigate();
 
+    //states
     const [hovering, setHovering] = useState(false);
     const [open, setOpen] = useState(false)
+
     return (
         <div
             onMouseEnter={() => setHovering(true)}

@@ -10,7 +10,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useToken from '../../hooks/useToken';
 
 const Register = () => {
+
+    //hooks
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
+    const { validate, ACTION_TYPES, formErrors } = useValidation();
+    const { primaryColor, backgroundColor } = useThemeColor();
+    const { token } = useToken()
+    const navigate = useNavigate();
     const { id } = useParams();
+
+    //states
     const [user, setUser] = useState({
         name: {
             first: '',
@@ -29,20 +38,12 @@ const Register = () => {
     });
     const [password, setPassword] = useState();
     const [confirmPassword, setconfirmPassword] = useState();
-    const [isEdit, setIsEdit] = useState(id ? true : false)
+    const [isEdit] = useState(id ? true : false)
     const [onMount, setOnMount] = useState(false);
     const [navigateTo, setNavigateTo] = useState();
     const [isBuisness, setIsBusiness] = useState(false);
 
-
-    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
-    const { validate, ACTION_TYPES, formErrors } = useValidation();
-
-    const { primaryColor, backgroundColor } = useThemeColor();
-    const { token } = useToken()
-    const navigate = useNavigate();
-
-
+    //functions
     const handleSubmit = (e) => {
         e.preventDefault()
         let userObj = {};
@@ -61,7 +62,6 @@ const Register = () => {
                 }
             };
         }
-
 
         if (!validate({ type: ACTION_TYPES.USER, payload: userObj })) return
 
@@ -107,10 +107,10 @@ const Register = () => {
             setNavigateTo(`/success/Registration`)
         }
 
-
         callApi(newRequest)
     }
 
+    //useEffects
     useEffect(() => {
         if (id) {
             setOnMount(true)
@@ -138,7 +138,6 @@ const Register = () => {
     }, [data])
 
     if (isLoading) return <CustomLoader />
-
 
     return (
         <div

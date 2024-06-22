@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate, useParams } from 'react-router-dom';
 import useThemeColor from '../../hooks/useThemeColor';
 
 const SuccessScreen = () => {
+    //hooks
     const { message } = useParams();
     const navigate = useNavigate();
     const { backgroundColor, textColor } = useThemeColor()
 
+    //useEffects
     useEffect(() => {
         setTimeout(() => {
             if (message === `Registration`) {
@@ -16,7 +18,6 @@ const SuccessScreen = () => {
                 navigate(`/`)
             }
         }, 1500)
-
     }, [])
 
     return (

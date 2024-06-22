@@ -10,7 +10,7 @@
     animation: slideDown 0.5s forwards;
 }
 .nav-dropDown{
-    height: 0; /* Start with height 0 */
+    height: 0; 
     animation: expandNav 0.5s forwards;
 }
 
