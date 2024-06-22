@@ -1,7 +1,5 @@
-import { Avatar, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { changeTheme } from '../../store/themeSlice';
@@ -47,7 +45,7 @@ const TopNav = () => {
 
     return (
         <nav
-            className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold `}
+            className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold ${expanded?`nav-dropDown`:``}`}
             style={{ backgroundColor: primaryColor }}
         >
 
@@ -83,7 +81,7 @@ const TopNav = () => {
             </div>
 
 
-            <ul className={`flex flex-col ${display}   md:flex md:flex-row w-full justify-between `}>
+            <ul className={`flex flex-col ${display} dropDown  md:flex md:flex-row w-full justify-between `}>
                 <div className='flex flex-col md:flex-row gap-4 md:items-end'>
                     <NavItem
                         selectedNav={selectedNav}

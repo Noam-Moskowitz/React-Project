@@ -5,14 +5,38 @@
     animation: slideIn .5s forwards;
 }
 
+.dropDown{
+    overflow: hidden;
+    animation: slideDown 0.5s forwards;
+}
+.nav-dropDown{
+    height: 0; /* Start with height 0 */
+    animation: expandNav 0.5s forwards;
+}
+
 @keyframes slideIn {
     0% {
         bottom: 100%;
-        /* Start completely outside the visible range */
     }
 
     100% {
         bottom: 30%;
-        /* End at left 0 */
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@keyframes expandNav {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 250px; /* Adjust this value to match the height of your ul */
     }
 }
