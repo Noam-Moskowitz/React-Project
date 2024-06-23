@@ -83,8 +83,8 @@ const Card2 = ({ content }) => {
                             <a
                                 href={content.web}
                                 target='blank'
-                                noopener
-                                noreferer
+                                noopener='true'
+                                noreferer='true'
                             >
                                 <div
                                     className='flex items-center gap-2'

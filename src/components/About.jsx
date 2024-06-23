@@ -6,26 +6,26 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 import useThemeColor from '../hooks/useThemeColor';
 
 const About = () => {
-    const {primaryColor, textColor, backgroundColor}=useThemeColor()
+    const { primaryColor, textColor, backgroundColor } = useThemeColor()
     return (
-        <div 
+        <div
             className='p-10'
-            style={{color:textColor, backgroundColor:backgroundColor}}
+            style={{ color: textColor, backgroundColor: backgroundColor }}
         >
             <h1
                 className='text-5xl font-bold'
-                style={{color:primaryColor}}
+                style={{ color: primaryColor }}
             >About Us</h1>
             <p className='p-2 py-5'>
                 Welcome to Bcard, your premier destination for creating and sharing virtual business cards. Our platform is designed to help businesses of all sizes showcase their essential information in an easily accessible and visually appealing format.
             </p>
             <div className='flex flex-col gap-5'>
-                <div 
+                <div
                     className='flex flex-col md:flex-row border-4 p-5 gap-3 rounded-lg items-center'
-                    style={{borderColor:primaryColor}}    
+                    style={{ borderColor: primaryColor }}
                 >
                     <div className='flex flex-col items-center gap-3 md:w-[15%]'>
-                        <FlagIcon fontSize='large' color='primary'/>
+                        <FlagIcon fontSize='large' color='primary' />
                         <h2
                             className='text-lg font-bold'
                         >Our Mission</h2>
@@ -35,22 +35,22 @@ const About = () => {
 
                     </p>
                 </div>
-                <div 
+                <div
                     className='flex flex-col md:flex-row border-4 p-5 gap-3 rounded-lg items-center'
-                    style={{borderColor:primaryColor}} 
+                    style={{ borderColor: primaryColor }}
                 >
                     <div className='flex flex-col items-center gap-3 md:w-[15%]'>
-                        <HandshakeIcon fontSize='large' color='primary'/>
+                        <HandshakeIcon fontSize='large' color='primary' />
                         <h2
                             className='text-lg font-bold'
                         >What We Offer
                         </h2>
                     </div>
-                    <p className='md:w-[85%]'>
-                    Our website allows businesses to log in and create their own virtual business cards, complete with:
+                    <div className='md:w-[85%]'>
+                        Our website allows businesses to log in and create their own virtual business cards, complete with:
                         <ul className='list-disc pl-10 py-5 md:py-0 md:pl-16'>
                             <li>
-                                
+
                                 <span className='font-bold'>Photo:</span> Add a professional image that represents your business.
                             </li>
                             <li>
@@ -61,14 +61,14 @@ const About = () => {
                             </li>
                         </ul>
                         Each virtual business card is part of our growing collection, making it simple for visitors to browse and discover businesses like yours.
-                    </p>
+                    </div>
                 </div>
-                <div 
+                <div
                     className='flex flex-col md:flex-row border-4 p-5 gap-3 items-center rounded-lg'
-                    style={{borderColor:primaryColor}} 
+                    style={{ borderColor: primaryColor }}
                 >
                     <div className='flex flex-col items-center gap-3 md:w-[15%]'>
-                        <HailIcon fontSize='large' color='primary'/>
+                        <HailIcon fontSize='large' color='primary' />
                         <h2
                             className='text-lg font-bold'
                         >Why Choose Us?</h2>
@@ -100,12 +100,12 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <div 
+                <div
                     className='flex flex-col md:flex-row border-4 p-5 gap-3 rounded-lg items-center'
-                    style={{borderColor:primaryColor}}     
+                    style={{ borderColor: primaryColor }}
                 >
                     <div className='flex flex-col items-center gap-3 md:w-[15%]'>
-                        <Diversity1Icon fontSize='large' color='primary'/>
+                        <Diversity1Icon fontSize='large' color='primary' />
                         <h2
                             className='text-lg font-bold'
                         >Join Us Today
@@ -125,7 +125,7 @@ const About = () => {
                 </p>
             </div>
         </div>
-        
+
     )
 }
 

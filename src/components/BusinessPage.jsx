@@ -12,7 +12,7 @@ import Notify from '../components/Notify'
 
 const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
-    const { data, callApi,  apiErrors, errorFlag, METHOD } = useApi();
+    const { data, callApi, apiErrors, errorFlag, METHOD } = useApi();
     const { textColor } = useThemeColor()
 
     const [content, setContent] = useState();
@@ -23,13 +23,13 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
-        width:`auto`,
+        width: `auto`,
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
-        maxHeight:`80vh`,
-        maxWidth:`500px`,
-        overflowY:`scroll`
+        maxHeight: `80vh`,
+        maxWidth: `500px`,
+        overflowY: `scroll`
     };
 
     const handleClose = () => {
@@ -51,7 +51,6 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
 
     useEffect(() => {
         if (data) {
-            console.log(data);
             setContent(data)
         }
     }, [data])
@@ -79,21 +78,21 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
                         <img src={content && content.image.url} alt={content && content.image.alt} style={{ width: '100%', marginBottom: '16px' }} />
                         <Box className='text-center'>
                             <Typography>
-                                <h1
+                                <div
                                     className='text-3xl uppercase underline font-bold'
                                 >
                                     {content.title}
-                                </h1>
+                                </div>
                             </Typography>
                             <Typography >
-                                <p className='text-lg pb-3'>
+                                <div className='text-lg pb-3'>
                                     {content.subtitle}
-                                </p>
+                                </div>
                             </Typography>
                             <Typography >
-                                <p className='text-left pb-4'>
+                                <div className='text-left pb-4'>
                                     {content.description}
-                                </p>
+                                </div>
                             </Typography>
                             <Typography className='flex gap-2 border-y-2'>
                                 <div>
@@ -127,7 +126,7 @@ const BusinessPage = ({ open, setOpen, setHovering, id }) => {
                 </Modal>
             }
             {errorFlag &&
-                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`}/>
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`} />
             }
         </div>
     )
