@@ -48,7 +48,7 @@ const TopNav = () => {
 
     return (
         <nav
-            className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold ${expanded?`nav-dropDown`:``}`}
+            className={`w-screen flex-col md:flex-row  p-5 shadow-md font-bold ${expanded ? `nav-dropDown` : ``}`}
             style={{ backgroundColor: primaryColor }}
         >
 
@@ -77,7 +77,7 @@ const TopNav = () => {
                     </div>
                     <div>
                         {authKeys && authKeys._id &&
-                            <UserIcon id={authKeys && authKeys._id} token={token} />
+                            <UserIcon id={authKeys && authKeys._id} token={token} setIsSearching={setIsSearching} />
                         }
                     </div>
                 </div>
@@ -174,7 +174,7 @@ const TopNav = () => {
 
                         </div> :
                         <div className='hidden md:block'>
-                            <UserIcon id={authKeys && authKeys._id} token={token} />
+                            <UserIcon id={authKeys && authKeys._id} token={token} setIsSearching={setIsSearching} />
                         </div>
                     }
                 </div>

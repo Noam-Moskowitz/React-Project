@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { saveInfo } from '../../store/userInfoSlice.js'
 import { useNavigate } from 'react-router-dom';
 
-const UserIcon = ({ id, token }) => {
+const UserIcon = ({ id, token, setIsSearching }) => {
     //hooks
     const { data, callApi, METHOD } = useApi();
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const UserIcon = ({ id, token }) => {
             }
         ));
         localStorage.removeItem(`token`)
-
+        setIsSearching(false)
         navigate(`/success/Log Out`)
     }
 
@@ -84,7 +84,10 @@ const UserIcon = ({ id, token }) => {
                     <Paper className='p-2'>
                         <List>
                             <ListItem disablePadding>
-                                <ListItemButton onClick={() => navigate(`/edit/${id}`)}>
+                                <ListItemButton onClick={() => {
+                                    setIsSearching(false);
+                                    navigate(`/edit/${id}`)
+                                }}>
                                     <ListItemIcon>
                                         <PersonIcon />
                                     </ListItemIcon>

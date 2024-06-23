@@ -12,12 +12,26 @@ const EditCard = () => {
     //hooks
     const { id } = useParams();
     const { primaryColor, backgroundColor } = useThemeColor();
-    const { data, callApi, isLoading, apiErrors, errorFlag,  METHOD, method } = useApi();
+    const { data, callApi, isLoading, apiErrors, errorFlag, METHOD, method } = useApi();
     const { validate, ACTION_TYPES, formErrors } = useValidation();
     const navigate = useNavigate()
 
     //states
-    const [content, setContent] = useState()
+    const [content, setContent] = useState({
+        title: ``,
+        subtitle: ``,
+        description: ``,
+        phone: ``,
+        email: ``,
+        address: {
+            state: '',
+            country: '',
+            city: '',
+            street: '',
+            houseNumber: '',
+            zip: ''
+        }
+    })
     const [isCreate] = useState(!id ? true : false)
 
     //useEffects
@@ -34,10 +48,9 @@ const EditCard = () => {
     useEffect(() => {
         if (data) {
             setContent(data)
-            if (method===METHOD.GET_ONE) return
-            if (method===METHOD.UPDATE) navigate(`/success/Card Update`);
-            if (method===METHOD.CREATE_CARD) navigate(`/success/Card Creation`)
-
+            if (method === METHOD.GET_ONE) return
+            if (method === METHOD.UPDATE) navigate(`/success/Card Update`);
+            if (method === METHOD.CREATE_CARD) navigate(`/success/Card Creation`)
         }
     }, [data])
 
@@ -61,9 +74,10 @@ const EditCard = () => {
         if (!validate({ type: ACTION_TYPES.CARD, payload: content })) return
 
 
-        const cleanedObject = cleanObject(content);
+        let cleanedObject = cleanObject(content);
         const token = localStorage.getItem(`token`)
         let newRequest;
+        if (!cleanedObject.image) cleanedObject.image = {};
 
         if (isCreate) {
             newRequest = new RequestObject(
@@ -88,14 +102,14 @@ const EditCard = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div className='flex justify-center md:py-20 p-5' style={{backgroundColor:backgroundColor}}>
+        <div className='flex justify-center md:py-20 p-5' style={{ backgroundColor: backgroundColor }}>
             <form
                 className='border-4 px-20 rounded md:w-[50vw]  py-10 flex-col'
                 style={{ backgroundColor: backgroundColor, borderColor: primaryColor }}
             >
                 <h1
                     className='font-bold text-center text-3xl pb-6 underline'
-                    style={{color:primaryColor}}
+                    style={{ color: primaryColor }}
                 >{isCreate ? `Create Card` : `Edit Card`}</h1>
                 <div className='flex flex-col   my-6 justify-center gap-6'>
                     <TextField
@@ -170,7 +184,6 @@ const EditCard = () => {
                         helperText={formErrors && formErrors.imageUrl}
                         value={content && content.image && content.image.url}
                         onChange={(e) => setContent({ ...content, image: { ...content.image, url: e.target.value } })}
-                        required
                     />
                     <TextField
                         id="outlined-error-helper-text"
@@ -180,7 +193,6 @@ const EditCard = () => {
                         helperText={formErrors && formErrors.imageDescription}
                         value={content && content.image && content.image.alt}
                         onChange={(e) => setContent({ ...content, image: { ...content.image, alt: e.target.value } })}
-                        required
                     />
 
                     <div className='flex flex-col md:flex-row gap-4 justify-around'>
@@ -249,8 +261,6 @@ const EditCard = () => {
                             id="outlined-error-helper-text"
                             type="text"
                             label='State'
-                            error={formErrors && formErrors.zip ? true : false}
-                            helperText={formErrors && formErrors.zip}
                             value={content && content.address && content.address.state}
                             onChange={(e) => setContent(
                                 { ...content, address: { ...content.address, state: e.target.value } }

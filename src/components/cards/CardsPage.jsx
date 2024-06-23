@@ -8,7 +8,7 @@ import useToken from '../../hooks/useToken';
 import { useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import Card2 from './Card2';
-import { Button} from '@mui/material';
+import { Button } from '@mui/material';
 import Notify from '../Notify';
 
 
@@ -73,17 +73,12 @@ const CardsPage = () => {
     }, [data])
 
     if (isLoading) return <SkeletonLoader />
-    if (cards && cards.length==0) return (
-        <h1 
-            style={{color:primaryColor}}
-            className='h-screen text-center uppercase font-bold pt-20 text-3xl'
-            >No cards were found!</h1>
-    )
+
 
     return (
-        <div className={cards && cards.length < 6 ? `md:h-screen` : ``}>
+        <div className={cards && cards.length < 3 ? `md:h-screen` : ``}>
             {userAuthKeys.isBusiness && type === `myCards` &&
-                <div  className='flex px-6 pt-6' >
+                <div className={` px-6 pt-6 ${cards && cards.length < 1 ? `h-screen` : ``}`} >
                     <Button
                         variant='contained'
                         endIcon={<AddIcon />}
@@ -93,20 +88,22 @@ const CardsPage = () => {
             }
 
             {searchValue &&
-                <div className='flex justify-center pt-2 w-full text-lg' style={{color:primaryColor}}>
-                    {cards.length} Results Found!
+                <div className='flex justify-center pt-2 w-full text-lg' style={{ color: primaryColor }}>
+                    {cards && cards.length} Results Found!
                 </div>
             }
-
-            <div
-                className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6 md:p-10  gap-8'
-            >
-                {cards && cards.map(card => (<Card2 key={card._id} content={card} />))}
-            </div>
-            {errorFlag&&
-                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`}  />
+            {cards && cards.length !== 0 &&
+                <div
+                    className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6 md:p-10  gap-8'
+                >
+                    {cards.map(card => (<Card2 key={card._id} content={card} />))}
+                </div>
             }
-        </div>
+            {
+                errorFlag &&
+                <Notify severity='error' message={`${apiErrors.response.status}: ${apiErrors.response.data}`} />
+            }
+        </div >
     )
 }
 

@@ -17,22 +17,22 @@ const Sandbox = () => {
     //jooks
     const { data, callApi, METHOD, isLoading } = useApi()
     const { token } = useToken()
-    const {backgroundColor}=useThemeColor()
+    const { backgroundColor } = useThemeColor()
 
     //states
     const [users, setUsers] = useState();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [openModal, setOpenModal]=useState(false);
-    const [selectedUser, setSelectedUser]=useState();
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState();
 
     //functions
-    const updateTableDelete = (deletedUser)=>{
-        const filteredArr=users.filter(user=> user._id!==deletedUser._id)
+    const updateTableDelete = (deletedUser) => {
+        const filteredArr = users.filter(user => user._id !== deletedUser._id)
         setUsers(filteredArr)
     }
-    const updateTableEdit = (editedUser)=>{
-        const filteredArr=users.map(user=> user._id===editedUser._id ? editedUser : user);
+    const updateTableEdit = (editedUser) => {
+        const filteredArr = users.map(user => user._id === editedUser._id ? editedUser : user);
         setUsers(filteredArr)
     }
 
@@ -81,7 +81,7 @@ const Sandbox = () => {
     if (isLoading) return <CustomLoader />
 
     return (
-        <div className='p-5 h-screen' style={{backgroundColor:backgroundColor}}>
+        <div className='p-5 h-screen' style={{ backgroundColor: backgroundColor }}>
             <Paper>
                 <TableContainer sx={{ maxHeight: `90vh` }}>
                     <Table stickyHeader aria-label="sticky table">
@@ -114,7 +114,7 @@ const Sandbox = () => {
                             {users && users
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((u, i) => (
-                                    <TableRow className='hover:cursor-pointer' hover key={u.id}>
+                                    <TableRow hover key={u._id}>
                                         <TableCell>{i + 1}</TableCell>
                                         <TableCell>{`${u.name.first} ${u.name.middle} ${u.name.last}`}</TableCell>
                                         <TableCell>{u.email}</TableCell>
@@ -125,11 +125,11 @@ const Sandbox = () => {
                                             <div className='flex gap-1'>
                                                 <div
                                                     className='hover:cursor-pointer p-1 rounded hover:bg-blue-100'
-                                                    onClick={()=>{
+                                                    onClick={() => {
                                                         setOpenModal(true)
                                                         setSelectedUser({
-                                                            action:`edit`,
-                                                            user:u
+                                                            action: `edit`,
+                                                            user: u
                                                         })
                                                     }}
                                                 >
@@ -137,11 +137,11 @@ const Sandbox = () => {
                                                 </div>
                                                 <div
                                                     className='hover:cursor-pointer p-1 rounded hover:bg-red-200'
-                                                    onClick={()=>{
+                                                    onClick={() => {
                                                         setOpenModal(true)
                                                         setSelectedUser({
-                                                            action:`delete`,
-                                                            user:u
+                                                            action: `delete`,
+                                                            user: u
                                                         });
                                                     }}
                                                 >
@@ -164,13 +164,14 @@ const Sandbox = () => {
                     />
                 </TableContainer>
             </Paper>
-            <UserModal 
-                openModal={openModal} 
-                setOpenModal={setOpenModal} 
-                selectedUser={selectedUser} 
+            <UserModal
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+                selectedUser={selectedUser}
+                setSelectedUser={setSelectedUser}
                 updateTableDelete={updateTableDelete}
                 updateTableEdit={updateTableEdit}
-                />
+            />
         </div>
     )
 }
