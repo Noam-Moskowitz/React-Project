@@ -17,7 +17,7 @@ const About = () => {
                 style={{ color: primaryColor }}
             >About Us</h1>
             <p className='p-2 py-5'>
-                Welcome to Bcard, your premier destination for creating and sharing virtual business cards. Our platform is designed to help businesses of all sizes showcase their essential information in an easily accessible and visually appealing format.
+                Welcome to Bcard&trade;, your premier destination for creating and sharing virtual business cards. Our platform is designed to help businesses of all sizes showcase their essential information in an easily accessible and visually appealing format.
             </p>
             <div className='flex flex-col gap-5'>
                 <div
@@ -31,7 +31,7 @@ const About = () => {
                         >Our Mission</h2>
                     </div>
                     <p className='md:w-[85%]'>
-                        At Bcard, our mission is to streamline the way businesses present themselves online. We believe that a well-crafted virtual business card is a powerful tool for networking, marketing, and connecting with potential clients and partners. By providing an easy-to-use platform for creating and displaying these cards, we aim to enhance the visibility and professionalism of businesses everywhere.
+                        At Bcard&trade;, our mission is to streamline the way businesses present themselves online. We believe that a well-crafted virtual business card is a powerful tool for networking, marketing, and connecting with potential clients and partners. By providing an easy-to-use platform for creating and displaying these cards, we aim to enhance the visibility and professionalism of businesses everywhere.
 
                     </p>
                 </div>
@@ -113,7 +113,7 @@ const About = () => {
                     </div>
                     <div className='flex flex-col gap-5 md:w-[85%]'>
                         <p>
-                            Whether you're a small startup or an established company, Bcard is here to help you present your business in the best light. Join us today and take the first step towards enhancing your online presence with a virtual business card that stands out.
+                            Whether you're a small startup or an established company, Bcard&trade; is here to help you present your business in the best light. Join us today and take the first step towards enhancing your online presence with a virtual business card that stands out.
                         </p>
                         <p>
                             Feel free to contact us with any questions or feedback. We're here to help you make the most of your online presence.
@@ -121,7 +121,7 @@ const About = () => {
                     </div>
                 </div>
                 <p>
-                    Thank you for visiting Bcard. We look forward to helping your business shine!
+                    Thank you for visiting Bcard&trade;. We look forward to helping your business shine!
                 </p>
             </div>
         </div>
