@@ -63,9 +63,7 @@ src/
 │   └── other hooks
 │
 └── components/
-    ├── ComponentSubject1/
-    ├── ComponentSubject2/
-    └── other components
+    ├── all components created for project
 ```
 
 ## Getting Started
