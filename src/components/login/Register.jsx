@@ -14,7 +14,7 @@ const Register = () => {
     //hooks
     const { data, callApi, isLoading, apiErrors, errorFlag, METHOD } = useApi();
     const { validate, ACTION_TYPES, formErrors } = useValidation();
-    const { primaryColor, backgroundColor } = useThemeColor();
+    const { primaryColor, backgroundColor, textColor } = useThemeColor();
     const { token } = useToken()
     const navigate = useNavigate();
     const { id } = useParams();
@@ -141,7 +141,7 @@ const Register = () => {
 
     return (
         <div
-            className='w-screen md:h-screen flex justify-center p-4'
+            className='w-screen  flex justify-center p-4'
             style={{ backgroundColor: backgroundColor }}
         >
             <form
@@ -284,6 +284,7 @@ const Register = () => {
                 {!isEdit &&
                     <div className='my-6'>
                         <FormControlLabel
+                            style={{ color: textColor }}
                             control={
                                 <Checkbox
                                     onChange={(e) => setIsBusiness(e.target.checked)}
