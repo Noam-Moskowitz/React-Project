@@ -31,6 +31,16 @@ Bcard is a web application built with React, Material UI, Tailwind CSS, JavaScri
 - **useValidation**: Manages form validation.
 - **Theme Hooks**: Manage theme switching and tracking in global state.
 
+  ## Usage
+
+1. **Register and Log In**: Create an account and log in to access the app's features.
+2. **View Business Cards**: Browse through various business cards.
+3. **Manage Favorites**: Add or remove business cards from your favorites.
+4. **Business Account Actions**: If you have a business account, you can create, edit, and delete your own business cards.
+5. **Admin Actions**: As an admin, you can manage all users from the sandbox area.
+6. **Search**: Use the search functionality to find specific cards or users.
+7. **Theme Switching**: Toggle between light and dark modes.
+
 ## File Structure
 
 ```
@@ -97,15 +107,7 @@ npm start
 
 
 
-## Usage
 
-1. **Register and Log In**: Create an account and log in to access the app's features.
-2. **View Business Cards**: Browse through various business cards.
-3. **Manage Favorites**: Add or remove business cards from your favorites.
-4. **Business Account Actions**: If you have a business account, you can create, edit, and delete your own business cards.
-5. **Admin Actions**: As an admin, you can manage all users from the sandbox area.
-6. **Search**: Use the search functionality to find specific cards or users.
-7. **Theme Switching**: Toggle between light and dark modes.
 
 
 
